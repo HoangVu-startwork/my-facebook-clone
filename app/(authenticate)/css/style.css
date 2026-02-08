@@ -1,0 +1,18 @@
+html,
+body {
+  background: #000000;
+}
+
+
+
+/* Nếu bạn dùng globals.css */
+.input-error {
+  border-color: #dc2626 !important;   /* đỏ-600 */
+}
+
+.error-icon {
+  background-image: url("/warning-icon.svg"); /* icon ! */
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}

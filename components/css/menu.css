@@ -1,0 +1,20 @@
+@media (max-width: 900px) {
+    .menu_nexchat_left input {
+        display: none;
+    }
+
+    /* Nếu bạn muốn box nhỏ lại */
+    .search_box {
+        width: auto;
+        padding-right: 0.75rem;
+        /* giữ icon cân đối */
+    }
+}
+
+
+@media (max-width: 700px) {
+    .menu_nexchat_center {
+      gap: 25px !important;
+    }
+  }
+  

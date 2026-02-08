@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "service/service-once/AuthState.js"  ],
   "exclude": ["node_modules"]
 }

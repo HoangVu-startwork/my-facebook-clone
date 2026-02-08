@@ -1,0 +1,363 @@
+"use client";
+
+import { useState } from "react";
+
+export default function Page() {
+    // State lưu form
+    const [form, setForm] = useState({
+        email: "",
+        password: "",
+        gender: "",
+        day: "",
+        month: "",
+        year: "",
+    });
+
+    // State show/hide password
+    const [showPassword, setShowPassword] = useState(false);
+
+    // State errors
+    const [errors, setErrors] = useState<any>({});
+
+    // Update input chung
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // Validate
+    const validate = () => {
+        let temp: any = {};
+
+        if (!form.email) temp.email = "Vui lòng nhập email";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+            temp.email = "Email không hợp lệ";
+
+        if (!form.password) temp.password = "Vui lòng nhập mật khẩu";
+        else {
+            if (form.password.length < 8) temp.password = "Ít nhất 8 ký tự";
+            else if (!/[A-Z]/.test(form.password)) temp.password = "Phải có chữ hoa";
+            else if (!/[a-z]/.test(form.password)) temp.password = "Phải có chữ thường";
+            else if (!/[0-9]/.test(form.password)) temp.password = "Phải có số";
+            else if (!/[^A-Za-z0-9]/.test(form.password)) temp.password = "Phải có ký tự đặc biệt";
+        }
+
+        if (!form.gender) temp.gender = "Vui lòng chọn giới tính";
+
+        if (!form.day || !form.month || !form.year)
+            temp.birthday = "Vui lòng chọn ngày sinh";
+
+        setErrors(temp);
+
+        return Object.keys(temp).length === 0;
+    };
+
+    // Submit
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
+        if (validate()) {
+            console.log("Form submit:", form);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+
+            {/* Email */}
+            <div>
+                <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="border p-2 w-full"
+                    placeholder="Nhập email"
+                />
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+            </div>
+
+            {/* Password */}
+            <div>
+                <div className="relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        className="border p-2 w-full"
+                        placeholder="Nhập mật khẩu"
+                    />
+                    <button
+                        type="button"
+                        className="absolute right-2 top-1/2 -translate-y-1/2"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? "Ẩn" : "Hiện"}
+                    </button>
+                </div>
+
+                {errors.password && (
+                    <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
+            </div>
+
+            {/* Gender */}
+            <div className="flex gap-3">
+                <label>
+                    <input
+                        type="radio"
+                        name="gender"
+                        value="male"
+                        checked={form.gender === "male"}
+                        onChange={handleChange}
+                    />{" "}
+                    Nam
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="gender"
+                        value="female"
+                        checked={form.gender === "female"}
+                        onChange={handleChange}
+                    />{" "}
+                    Nữ
+                </label>
+            </div>
+            {errors.gender && (
+                <p className="text-red-500 text-sm">{errors.gender}</p>
+            )}
+
+            {/* Birthday */}
+            <div className="flex gap-2">
+                <select
+                    name="day"
+                    value={form.day}
+                    onChange={handleChange}
+                    className="border p-2"
+                >
+                    <option value="">Ngày</option>
+                    {[...Array(31)].map((_, i) => (
+                        <option key={i} value={i + 1}>
+                            {i + 1}
+                        </option>
+                    ))}
+                </select>
+
+                <select
+                    name="month"
+                    value={form.month}
+                    onChange={handleChange}
+                    className="border p-2"
+                >
+                    <option value="">Tháng</option>
+                    {[...Array(12)].map((_, i) => (
+                        <option key={i} value={i + 1}>
+                            {i + 1}
+                        </option>
+                    ))}
+                </select>
+
+                <select
+                    name="year"
+                    value={form.year}
+                    onChange={handleChange}
+                    className="border p-2"
+                >
+                    <option value="">Năm</option>
+                    {Array.from({ length: 80 }).map((_, i) => {
+                        const year = 2025 - i;
+                        return (
+                            <option key={year} value={year}>
+                                {year}
+                            </option>
+                        );
+                    })}
+                </select>
+            </div>
+
+            {errors.birthday && (
+                <p className="text-red-500 text-sm">{errors.birthday}</p>
+            )}
+
+            {/* Submit */}
+            <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+                Đăng ký
+            </button>
+        </form>
+    );
+}
+
+
+-----------
+npm install react-hook-form @hookform/resolvers yup
+
+
+
+"use client";
+
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+// ----- Validate bằng YUP -----
+const schema = yup.object({
+    email: yup.string().email("Email không hợp lệ").required("Vui lòng nhập email"),
+    password: yup
+        .string()
+        .required("Vui lòng nhập mật khẩu")
+        .min(8, "Ít nhất 8 ký tự")
+        .matches(/[A-Z]/, "Phải có chữ hoa")
+        .matches(/[a-z]/, "Phải có chữ thường")
+        .matches(/[0-9]/, "Phải có số")
+        .matches(/[^A-Za-z0-9]/, "Phải có ký tự đặc biệt"),
+    gender: yup.string().required("Vui lòng chọn giới tính"),
+    day: yup.number().required("Chọn ngày"),
+    month: yup.number().required("Chọn tháng"),
+    year: yup.number().required("Chọn năm"),
+});
+
+export default function Page() {
+    // Hook Form
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    // Submit form
+    const onSubmit = (data: any) => {
+        console.log("Form data:", data);
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
+
+            {/* Email */}
+            <div>
+                <input
+                    {...register("email")}
+                    type="email"
+                    className="border p-2 w-full"
+                    placeholder="Nhập email"
+                />
+                {errors.email && (
+                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
+            </div>
+
+            {/* Password */}
+            <div>
+                <div className="relative">
+                    <input
+                        {...register("password")}
+                        type={showPassword ? "text" : "password"}
+                        className="border p-2 w-full"
+                        placeholder="Nhập mật khẩu"
+                    />
+                    <button
+                        type="button"
+                        className="absolute right-2 top-1/2 -translate-y-1/2"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? "Ẩn" : "Hiện"}
+                    </button>
+                </div>
+
+                {errors.password && (
+                    <p className="text-red-500 text-sm">{errors.password.message}</p>
+                )}
+            </div>
+
+            {/* Gender */}
+            <div className="flex gap-3">
+                <label>
+                    <input type="radio" value="male" {...register("gender")} /> Nam
+                </label>
+                <label>
+                    <input type="radio" value="female" {...register("gender")} /> Nữ
+                </label>
+            </div>
+            {errors.gender && (
+                <p className="text-red-500 text-sm">{errors.gender.message}</p>
+            )}
+
+            {/* Birthday */}
+            <div className="flex gap-2">
+                <select {...register("day")} className="border p-2">
+                    <option value="">Ngày</option>
+                    {[...Array(31)].map((_, i) => (
+                        <option key={i} value={i + 1}>
+                            {i + 1}
+                        </option>
+                    ))}
+                </select>
+
+                <select {...register("month")} className="border p-2">
+                    <option value="">Tháng</option>
+                    {[...Array(12)].map((_, i) => (
+                        <option key={i} value={i + 1}>
+                            {i + 1}
+                        </option>
+                    ))}
+                </select>
+
+                <select {...register("year")} className="border p-2">
+                    <option value="">Năm</option>
+                    {Array.from({ length: 80 }).map((_, i) => {
+                        const year = 2025 - i;
+                        return (
+                            <option key={year} value={year}>
+                                {year}
+                            </option>
+                        );
+                    })}
+                </select>
+            </div>
+
+            {(errors.day || errors.month || errors.year) && (
+                <p className="text-red-500 text-sm">Vui lòng chọn đầy đủ ngày sinh</p>
+            )}
+
+            {/* Submit */}
+            <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+                Đăng ký
+            </button>
+        </form>
+    );
+}
+
+
+
+onst handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    const username = form.email.split("@")[0]; // hoặc thêm input riêng
+    const sdt = "0000000000"; // nếu cần, hoặc tạo input
+    const gioitinh = form.gender;
+    const ngaysinh = `${form.year}-${form.month}-${form.day}`;
+    const password = form.password;
+
+    const res = await Auth.signup(username, form.email, sdt, gioitinh, ngaysinh, password);
+
+    if (res?.error) {
+        alert("Đăng ký thất bại: " + res.message);
+    } else {
+        alert("Đăng ký thành công!");
+        console.log("REGISTER SUCCESS:", res);
+    }
+};

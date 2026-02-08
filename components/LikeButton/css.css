@@ -1,0 +1,44 @@
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.15s ease-out;
+}
+
+.like-thumbsUp {
+    width: 17px;
+    height: 17px;
+    font-size: 18px;
+    margin-top: -9px;
+}
+
+.like-thumbsUps {
+    width: 17px;
+    height: 17px;
+}
+
+.like-thumbsUp {
+    transition: color 0.15s ease, transform 0.12s ease;
+}
+
+.like-thumbsUp:active {
+    transform: scale(0.9);
+}
+
+
+.animate-fade-in {
+    animation: fade-in 0.15s ease-out;
+}
+
+
+
+/* Post - Content */

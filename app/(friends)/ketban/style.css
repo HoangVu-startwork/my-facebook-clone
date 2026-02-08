@@ -1,0 +1,87 @@
+html,
+body {
+    background: #f7f7f7;
+}
+
+.menu_ketban {
+    width: 20%;
+}
+
+.hienthi_ketban {
+    width: 82%;
+}
+
+.from_guiloimoi_ketban {
+    width: 400px;
+}
+
+.ketban_layout_550 {
+    display: none;
+}
+
+.ketban_layout_551 {
+    height: 100%;
+    overflow: hidden;
+}
+
+.menu_ketban {
+    width: 20%;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+}
+
+.hienthi_ketban {
+    height: calc(100vh - 72px);
+    /* mt-18 */
+    overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+    .menu_ketban {
+        width: 100%;
+        min-width: 220px;
+    }
+
+    .ketban_layout_551 {
+        display: none;
+    }
+
+    .ketban_layout_550 {
+        display: block;
+    }
+
+    .hienthi_ketban {
+        width: 100%;
+    }
+
+    .ketban_layout_550 .hienthi_ketban {
+        margin-right: 0px !important;
+    }
+}
+
+@media (min-width: 600px) {
+    .menu_ketban {
+        width: 18%;
+        min-width: 220px;
+    }
+}
+
+@media (min-width: 900px) {
+    .menu_ketban {
+        width: 18%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .menu_ketban {
+        width: 18%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .menu_ketban {
+        width: 18%;
+        min-width: 200px;
+    }
+}

@@ -1,0 +1,281 @@
+.requests-page-ketban {
+    background: #0000 !important;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    /* khóa scroll ngoài */
+}
+
+.requests-guiketban {
+    width: 30%;
+    max-width: 30%;
+    position: sticky;
+    /* color: #11fa00; */
+    margin-top: 55px;
+    /* background: #200101; */
+    /* đúng bằng mt-15 của bạn */
+    height: calc(100vh - 55px);
+    /* border-right: 1px solid #000000; */
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.397);
+}
+
+.requests-thongtin {
+    margin-top: 45px;
+    /* color: #11fa00; */
+    width: 100%;
+    height: calc(100vh - 45px);
+    background: #eaeaea;
+    overflow-y: auto;
+}
+
+.loimoiketban {
+    border-radius: 10px;
+    display: flex;
+    gap: 15;
+}
+
+/*  */
+
+.fb-profile-header {
+    background: white;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* Cover */
+.fb-cover {
+    margin-top: 10p  x;
+    height: 300px;
+    background: #e4e6eb;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Info wrapper */
+.fb-info-wrapper {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 16px;
+    margin-top: -80px;
+}
+
+/* Avatar */
+.fb-avatar {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    background: #cfd1d4;
+    border: 4px solid white;
+}
+
+/* Name + actions */
+.fb-name-actions {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 16px;
+    margin-left: 20px;
+}
+
+.fb-name {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+/* Phản hồi */
+.btn.primary {
+    background: #1877f2;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.dropdown {
+    position: absolute;
+    top: 110%;
+    left: -50%;
+    width: 180px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 6px 0;
+    z-index: 100;
+}
+
+.dropdown-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background: #f2f2f2;
+}
+
+.dropdown-item.danger {
+    color: #e53935;
+}
+
+/* Buttons */
+.fb-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #e4e6eb;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn.primary {
+
+    color: white;
+}
+
+.loimoiketban-right {
+    width: 100%;
+    margin-left: -4px;
+}
+
+.nuttrangthai_loimoiketban {
+    gap: 5px;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.nuttrangthai_loimoiketban button {
+    width: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.requests-trangfriends {
+    gap: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.fb-profile-header-div{
+    width: 85%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.fb-profile-header2 {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.fb-profile-header-div2{
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 5px;
+}
+
+/* Thiết kế hiện thị thông in */
+.requests-tab-baiviet {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.requests-tab-baiviet-div-1 {
+    width: 38%;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.requests-tap-baiviet-div-2 {
+    background: #ffffff;
+    width: 62%;
+    height: auto !important;
+    text-align: left;
+}
+
+.requests-tab-baiviet-div-1-1{
+    background:#ffffff;
+    width: 100%;
+    text-align: left;
+    border-radius: 10px;
+    padding: 10px 5px 10px 5px;
+}
+
+.requests-tab-baiviet-div-1-2{
+    background: #ffffff;
+    width: 100%;
+    padding: 10px 5px 10px 5px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.requests-tab-baiviet-div-1-1 h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.requests-tab-baiviet-div-1-2 h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.tab-thongtintruonghoc {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 10px;
+    padding: 5px;
+}
+
+.font-tabtruong{
+    font-size: 15px;
+}
+
+.font-text-tabtruong{
+    font-weight: 700;
+}
+
+.tab-thongtintruonghoc-2-p{
+    font-size: 13px;
+}
+
+.accommodation-diachi {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+.accommodation-diachi-icon{
+    margin-left: 8px;
+}
+.accommodation-diachi-icon .accommodation-mappinHouse{
+    width: 20px !important;
+}
+
+.from-accommodation{
+    margin-left: 2px;
+    font-size: 15px;
+}
+

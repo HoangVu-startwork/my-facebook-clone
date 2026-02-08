@@ -1,0 +1,18 @@
+.show2_manghinh_600 {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .show_manghinh_600 {
+        display: none;
+    }
+
+    .show2_manghinh_600 {
+        display: block;
+    }
+
+    .show2_manghinh_600_flex {
+        flex-wrap: wrap;
+        gap: 19px;
+    }
+}

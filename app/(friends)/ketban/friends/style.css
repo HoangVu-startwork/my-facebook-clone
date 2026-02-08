@@ -1,0 +1,128 @@
+/* .khungketban_ul {
+    flex-wrap: wrap;
+} */
+
+
+.trangtru_khungketban .khungketban_ul {
+    display: grid;
+    /* flex-wrap: wrap; */
+    gap: 12px;
+    /* grid-template-columns: repeat(2, 1fr); */
+}
+
+.trangtru_khungketban .khungketban_li {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e5e7ed;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.from_guiloimoi_ketban {
+    width: 400px;
+}
+
+.username {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 420px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+
+    .khungketban_ul img {
+        height: 122px !important;
+
+    }
+
+    .khungketban_li_name_div {
+        margin-top: 1px !important;
+    }
+
+    .from_guiloimoi_ketban {
+        width: 90%;
+    }
+
+    .khungketban_li_img {
+        height: 122px !important;
+        width: 40%;
+    }
+
+    .khungketban_li_name {
+        width: 60%;
+    }
+
+    .khungketban_li {
+        display: flex;
+    }
+
+    .khungketban_li_name {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .khungketban_li_name>p {
+        font-weight: bold;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    /* đẩy khung nút xuống đáy */
+    .khungketban_li_name_div {
+        margin-top: auto;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .trangtru_khungketban .khungketban_ul {
+        margin-right: 0px;
+        /* padding: 3px; */
+    }
+
+    .khungketban_li_img {
+        height: 155px;
+    }
+
+    .khungketban_ul img {
+        height: 155px;
+    }
+}
+
+@media (min-width: 600px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1050px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1400px) {
+    .khungketban_ul {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
