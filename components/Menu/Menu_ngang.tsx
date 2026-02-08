@@ -28,7 +28,7 @@ import { useAuthStore } from "@/service/service-once/AuthState"
 export default function bookHeader() {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const [tinhanOpen, settinhanOpen] = useState(false);
     return (
         <div className="menu_nexchat w-full bg-white shadow h-14 flex items-center px-4 justify-between fixed top-0 left-0 z-50">
 
@@ -80,7 +80,9 @@ export default function bookHeader() {
                 <div onClick={() => setMenuOpen(true)}>
                     <CircleIcon icon={<AppWindow size={20} />} />
                 </div>
-                <CircleIcon icon={<MessageCircle size={20} />} />
+                <div onClick={() => settinhanOpen(true)}>
+                    <CircleIcon icon={<MessageCircle size={20} />} />
+                </div>
                 <CircleIcon icon={<Bell size={20} />} badge={1} />
 
                 {/* Avatar Menu */}
@@ -88,6 +90,9 @@ export default function bookHeader() {
             </div>
             {menuOpen && (
                 <MenuOverlay onClose={() => setMenuOpen(false)} />
+            )}
+            {tinhanOpen && (
+                <Tinnhan onClose={() => settinhanOpen(false)} />
             )}
         </div>
     );
@@ -371,6 +376,34 @@ function CreateItemMenu({ icon, label, onClick }: {
         <div onClick={onClick} className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
             <div className="text-xl">{icon}</div>
             <p className="font-medium">{label}</p>
+        </div>
+    );
+}
+
+
+/// Tin nhắn
+function Tinnhan({ onClose }: { onClose: () => void }) {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const close = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) {
+                onClose();
+            }
+        };
+        document.addEventListener("mousedown", close);
+        return () => document.removeEventListener("mousedown", close);
+    }, []);
+
+    const [openPostForm, setOpenPostForm] = useState(false);
+
+    return (
+        <div className="absolute top-14 right-0  h-[calc(100vh-56px)] bg-gray-100 z-[999] overflow-auto">
+            <div ref={ref} className="max-w-[1180px] mx-auto p-4 flex gap-4">
+                Hoanf
+
+                {openPostForm && <CreatePost onClose={() => setOpenPostForm(false)} />}
+            </div>
         </div>
     );
 }
