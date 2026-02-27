@@ -10,9 +10,10 @@ export default function InitSocket() {
 
     useEffect(() => {
         if (user?.id) {
+            console.log("🔥 Init socket with user:", user.id);
             socket(user.id);
         }
-    }, [user?.id]);
+    }, [user?.id, socket] );
 
     return null;
 }

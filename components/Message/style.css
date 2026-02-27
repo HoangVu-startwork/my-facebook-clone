@@ -1,0 +1,97 @@
+.khung-message {
+    border-radius: 20px;
+}
+
+.x7m3og9 {
+    box-shadow: 0 1px 2px var(--shadow-1), 0 -1px var(--media-inner-border) inset, 0 2px 1px -1px var(--shadow-inset) inset;
+}
+
+
+.khung-message_div_1 {
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.1),
+        0 -1px 0 rgba(0, 0, 0, 0.08) inset,
+        0 2px 3px -1px rgba(255, 255, 255, 0.6) inset;
+}
+
+.khung-message_div_2 {
+    overscroll-behavior: contain;
+    margin-right: 2px;
+    margin-bottom: 5px;
+}
+
+.x1xsqp64 {
+    background-position: center;
+}
+
+.khung-message_div_2::-webkit-scrollbar {
+    width: 6px;
+}
+
+.khung-message_div_2::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.khung-message_div_2::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.khung-message_div_1_1{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.khung-message_div_1_1_span{
+    font-size: 17px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.khung-message_div_1_button{
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.MsgcreatedAt {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.highlight-msg {
+    animation: flashHighlight 2s ease;
+}
+
+@keyframes flashHighlight {
+    0% { background-color: rgba(255, 255, 0, 0.4); }
+    100% { background-color: transparent; }
+}
+
+.user_topic_1{
+    position: relative;
+    right: 0px;
+    margin-left: auto;
+}
+.message_conversation_1{
+    margin-left: auto;
+    width: auto;
+    text-align: right;
+}
+
+.message_conversation_1_1{
+    width: auto;
+    margin-left: auto;
+}
+
+.message_conversation_2_1{
+    margin-right: auto;
+}
+
+.khung-message_div_2_createdAt{
+    background: #999999;
+    padding: 4px 12px 4px 12px;
+    font-weight: 500;
+}

@@ -24,6 +24,8 @@ import Auth from "@/service/user";
 import CreatePost from "@/components/Create/Create-post"
 import Link from "next/link";
 import { useAuthStore } from "@/service/service-once/AuthState"
+import Conversation from "@/service/conversation";
+
 
 export default function bookHeader() {
     const pathname = usePathname();
@@ -380,11 +382,26 @@ function CreateItemMenu({ icon, label, onClick }: {
     );
 }
 
+interface UserInfo {
+    id: number;
+    username: string;
+    avatUrl: string | null;
+}
 
+interface ConversationType {
+    id: number;
+    type: "private" | "group";
+    userOneId: number;
+    userTwoId: number;
+    createdAt: string;
+    friend?: UserInfo; // 👈 thêm cái này
+}
+
+import image_vavart_null from "@/public/image/avatuser_null.png";
 /// Tin nhắn
 function Tinnhan({ onClose }: { onClose: () => void }) {
     const ref = useRef<HTMLDivElement>(null);
-
+    const [conversations, setConversations] = useState<ConversationType[]>([]);
     useEffect(() => {
         const close = (e: MouseEvent) => {
             if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -397,11 +414,11 @@ function Tinnhan({ onClose }: { onClose: () => void }) {
 
     const [openPostForm, setOpenPostForm] = useState(false);
 
+
     return (
         <div className="absolute top-14 right-0  h-[calc(100vh-56px)] bg-gray-100 z-[999] overflow-auto">
-            <div ref={ref} className="max-w-[1180px] mx-auto p-4 flex gap-4">
-                Hoanf
-
+            <div ref={ref} className="max-w-[1180px] mx-auto p-4 gap-4">
+                
                 {openPostForm && <CreatePost onClose={() => setOpenPostForm(false)} />}
             </div>
         </div>
