@@ -12,7 +12,7 @@ import { FileText } from "lucide-react";
 import PostContent from "@/components/LikeButton/Post-content"
 import { useReactionStore } from "@/service/service-once/PostState";
 import { usePostView } from "@/service/service-once/usePostView";
-
+import Conversation from "@/components/Message/Conversation";
 import {
   MoreHorizontal,
   ThumbsUp,
@@ -224,6 +224,7 @@ export default function App() {
     };
   }, [socket]);
 
+
   type PostType = 'TEXT' | 'BACKGROUND' | 'FILE' | 'MEDIA';
 
   const getPostType = (post: Postuser): PostType => {
@@ -426,7 +427,7 @@ export default function App() {
         <>{mes}</>
       )}
       <h1>Chat Realtime</h1>
-
+      <Conversation />
       <input
         value={msg}
         onChange={(e) => setMsg(e.target.value)}

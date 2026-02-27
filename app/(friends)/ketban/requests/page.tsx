@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GraduationCap, MapPinHouse, MapPinned } from "lucide-react";
 import image_vavart_null from "@/public/image/avatuser_null.png";
+import Loading from "@/components/loading/Loading";
 import {
     ArrowLeft
 } from "lucide-react";
@@ -69,8 +70,9 @@ export default function page() {
     }
 
     const fetchchapnhanketban = async (pendingId: number) => {
-        console.log(pendingId)
+        if (loading) return;
         try {
+            setLoading(true);
             const data = await Filend.putFilendAccept(pendingId);
             setData(prev =>
                 prev.map(u =>
@@ -86,7 +88,7 @@ export default function page() {
         } catch (err) {
 
         } finally {
-
+            setLoading(false); // tắt loading dù thành công hay lỗi
         }
     }
 
@@ -157,6 +159,11 @@ export default function page() {
 
     return (
         <div className="w-full">
+            {loading && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                    <Loading/>
+                </div>
+            )}
             <div className="flex h-full pr-2 requests-page-ketban">
                 <div className="requests-guiketban pl-1 pr-1">
                     <div>
