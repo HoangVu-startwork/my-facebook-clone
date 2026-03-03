@@ -13,6 +13,7 @@ import PostContent from "@/components/LikeButton/Post-content"
 import { useReactionStore } from "@/service/service-once/PostState";
 import { usePostView } from "@/service/service-once/usePostView";
 import Conversation from "@/components/Message/Conversation";
+
 import {
   MoreHorizontal,
   ThumbsUp,
@@ -542,13 +543,13 @@ export default function App() {
                   <div className="mt-2">
                     {post.mediaType === "image" ? (
                       <img
-                        src={post.mediaUrl}
+                        src={post?.mediaUrl || image_vavart_null.src}
                         alt="media"
                         className="w-full max-h-[72vh] object-contain bg-black"
                       />
                     ) : post.mediaType === "video" ? (
                       <video
-                        src={post.mediaUrl}
+                        src={post.mediaUrl || image_vavart_null.src}
                         controls
                         className="w-full max-h-[72vh] object-contain bg-black"
                       />
