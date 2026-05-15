@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 
+// Ngày tháng năm
 interface DateSelectorProps {
   onSelect: (date: { day: number | null; month: number | null; year: number | null }) => void;
   dateError?: boolean;

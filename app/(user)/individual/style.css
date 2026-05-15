@@ -1,0 +1,22 @@
+.requests-thongtin-user {
+    margin-top: 45px;
+    /* color: #11fa00; */
+    width: 100%;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+.requests-thongtin-header-div{
+    width: 75%;
+    margin: 0 auto;
+}
+
+.requests-thongtin-anhnen{
+    height: 550px;
+    border-radius: 15px;
+    margin: 0 auto;
+}
+
+.requests-thongtin-anhnen img{
+    border-radius: 15px;
+} 

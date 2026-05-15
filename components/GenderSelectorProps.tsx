@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 
+// Chọn giới tính
 interface GenderSelectorProps {
   onSelect: (gender: string) => void;
   isGenderError?: boolean

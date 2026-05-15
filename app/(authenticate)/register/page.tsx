@@ -2,11 +2,16 @@
 import DateSelector from "@/components/DateSelector";
 import GenderSelector from "@/components/GenderSelectorProps";
 import React, { useState, useCallback, useEffect } from "react";
+import Loading from "@/components/loading/Loading";
 import UserService from "@/service/user";
 import "../css/style.css"
 import { createContext } from "vm";
 
 export default function Page() {
+
+    const [isLoading, setIsLoading] = useState(false);
+
+
     // chọn ngày tháng năm sinh
     const [selectedDate, setSelectedDate] = useState({
         day: null as number | null,
@@ -62,7 +67,6 @@ export default function Page() {
     const [dateTouched, setDateTouched] = useState(false);
     const [phoneTouched, setPhoneTouched] = useState(false);
 
-
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setTouched(true);
@@ -74,7 +78,7 @@ export default function Page() {
 
         if (username.trim() === "") return;
         const isDateValid = selectedDate.day && selectedDate.month && selectedDate.year;
-        const isDateValids = (selectedDate.day + "/" +  selectedDate.month + "/" + selectedDate.year)
+        const isDateValids = (selectedDate.day + "/" + selectedDate.month + "/" + selectedDate.year)
 
         if (!isDateValid) { return; }
         if (!gender) { return; }
@@ -82,6 +86,8 @@ export default function Page() {
         if (phone.trim() === "") return;
         if (password.trim() === "") return;
 
+        // --- BẮT ĐẦU LOADING ---
+        setIsLoading(true);
         try {
             const response = await UserService.singup(email, username, phone, gender, password, isDateValids);
             if (response) {
@@ -94,9 +100,14 @@ export default function Page() {
                 setError("Hệ thống đang bao trì");
             }
             return;
+        } finally {
+            // Tắt loading
+            setIsLoading(false);
         }
 
     };
+
+    
 
     const isError = touched && username.trim() === "";
     const isEmail = touchedemail && email.trim() === "";
@@ -107,6 +118,11 @@ export default function Page() {
 
     return (
         <div className="flex w-full h-screen">
+            {isLoading && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <Loading/>
+                </div>
+            )}
             <div className="hidden lg:flex items-center justify-center flex-1 bg-white text-black">
                 <div className="max-w-md text-center">
                     <svg
@@ -239,11 +255,11 @@ export default function Page() {
                                         <div className="w-4 h-4 bg-red-600 text-white flex items-center justify-center rounded-full text-xs cursor-pointer group">
                                             !
                                             {/* TOOLTIP */}
-                                            <div className="absolute left-[-150px] top-11 transform -translate-y-1/2 
+                                            <div className="absolute left-[-235px] top-11 transform -translate-y-1/2 
                                 bg-red-600 text-white text-sm px-3 py-1 rounded shadow
                                 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap
                             ">
-                                                What's your name?
+                                                Please enter your email address?
                                             </div>
                                         </div>
                                     </div>
@@ -270,11 +286,11 @@ export default function Page() {
                                         <div className="w-4 h-4 bg-red-600 text-white flex items-center justify-center rounded-full text-xs cursor-pointer group">
                                             !
                                             {/* TOOLTIP */}
-                                            <div className="absolute left-[-150px] top-11 transform -translate-y-1/2 
+                                            <div className="absolute left-[-235px] top-11 transform -translate-y-1/2 
                                 bg-red-600 text-white text-sm px-3 py-1 rounded shadow
                                 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap
                             ">
-                                                What's your name?
+                                                Please enter your phone number.
                                             </div>
                                         </div>
                                     </div>
@@ -282,18 +298,18 @@ export default function Page() {
                             </div>
                         </div>
                         <div className="relative">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Date of birth</label>
+                            <label className="block text-sm font-medium mb-2 text-gray-700">Date of birth</label>
                             <DateSelector onSelect={handleDateSelect} dateError={dateError} />
                             {dateError && (
                                 <div className="absolute right-3 mt-2 top-1 -translate-y-1/2 text-gray-600">
                                     <div className="w-4 h-4 bg-red-600 text-white flex items-center justify-center rounded-full text-xs cursor-pointer group">
                                         !
                                         {/* TOOLTIP */}
-                                        <div className="absolute left-[-150px] top-1.5 transform -translate-y-1/2 
+                                        <div className="absolute left-[-233px] top-1.5 transform -translate-y-1/2 
                                 bg-red-600 text-white text-sm px-3 py-1 rounded shadow
                                 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap
                             ">
-                                            What's your name?
+                                            Please select your date of birth.
                                         </div>
                                     </div>
                                 </div>
@@ -307,11 +323,11 @@ export default function Page() {
                                     <div className="w-4 h-4 bg-red-600 text-white flex items-center justify-center rounded-full text-xs cursor-pointer group">
                                         !
                                         {/* TOOLTIP */}
-                                        <div className="absolute left-[-150px] top-1.5 transform -translate-y-1/2 
+                                        <div className="absolute left-[-165px] top-1.5 transform -translate-y-1/2 
                                 bg-red-600 text-white text-sm px-3 py-1 rounded shadow
                                 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap
                             ">
-                                            What's your name?
+                                            Choose your gender?
                                         </div>
                                     </div>
                                 </div>
@@ -366,11 +382,11 @@ export default function Page() {
                                         <div className="w-4 h-4 bg-red-600 text-white flex items-center justify-center rounded-full text-xs cursor-pointer group">
                                             !
                                             {/* TOOLTIP */}
-                                            <div className="absolute left-[-150px] top-1 transform -translate-y-1/2 
+                                            <div className="absolute left-[-205px] top-1 transform -translate-y-1/2 
                                 bg-red-600 text-white text-sm px-3 py-1 rounded shadow
                                 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap
                             ">
-                                                What's your name?
+                                                Please enter the password?
                                             </div>
                                         </div>
                                     </div>

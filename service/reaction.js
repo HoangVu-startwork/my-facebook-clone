@@ -12,14 +12,8 @@ const Reaction = {
             }
 
             reactionFetched = true;
-            const token = window.localStorage.getItem("token");
 
-            const config = {}
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/post/reactions`, config)
+            const response = await api.get(`/post/reactions`, {withCredentials: true})
             reactionCache = response.data.data; // lưu cache
             return reactionCache;
 
@@ -36,14 +30,8 @@ const Reaction = {
 
     reactPost: async ({postId, reactionCode}) => {
         try {
-            const token = window.localStorage.getItem("token");
-
-            const config = {}
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
             console.log(postId, reactionCode);
-            const response = await api.post(`/posts/react`, {postId, reactionCode}, config)
+            const response = await api.post(`/posts/react`, {postId, reactionCode}, {withCredentials: true})
             return response;
         } catch (error) {
 

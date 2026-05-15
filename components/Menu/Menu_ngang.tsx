@@ -174,6 +174,15 @@ function UserMenu() {
             ?.charAt(0)
             ?.toUpperCase() || "";
 
+
+    const handleLogout = async () => {
+        try {
+            await Auth.logout();
+            window.location.replace("/login");
+        } catch (error) {
+            console.error("Lỗi khi đăng xuất:", error);
+        }
+    }
     return (
         <div className="relative" ref={menuRef}>
             {/* Avatar Button */}
@@ -197,22 +206,24 @@ function UserMenu() {
             {open && (
                 <div className="absolute right-0 mt-3 w-80 bg-white shadow-2xl rounded-xl p-3 z-[999]">
                     {/* Profile */}
-                    <div className="flex items-center gap-3 p-3 hover:bg-gray-100 rounded-lg cursor-pointer">
-                        <div className="w-12 h-12 rounded-full text-xl font-semibold bg-black text-white flex items-center cursor-pointer overflow-hidden justify-center uppercase">
-                            {avatarUrl ? (
-                                <img
-                                    src={avatarUrl}
-                                    alt="avatar"
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                firstLetterOfLastName
-                            )}
-                        </div>
-                        <div>
-                            <p className="font-semibold">{username ? capitalizeWords(username) : "Đang tải..."}</p>
-                            <p className="text-sm text-gray-500">Xem tất cả trang cá nhân</p>
-                        </div>
+                    <div className="flex items-center p-1 hover:bg-gray-100 rounded-lg cursor-pointer">
+                        <Link href="/individual" className="flex gap-3 items-center hover:bg-gray-100 rounded-lg cursor-pointer">
+                            <div className="w-12 h-12 rounded-full text-xl font-semibold bg-black text-white flex items-center cursor-pointer overflow-hidden justify-center uppercase">
+                                {avatarUrl ? (
+                                    <img
+                                        src={avatarUrl}
+                                        alt="avatar"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    firstLetterOfLastName
+                                )}
+                            </div>
+                            <div>
+                                <p className="font-semibold">{username ? capitalizeWords(username) : "Đang tải..."}</p>
+                                <p className="text-sm text-gray-500">Xem tất cả trang cá nhân</p>
+                            </div>
+                        </Link>
                     </div>
 
                     <div className="h-[1px] bg-gray-200 my-2"></div>
@@ -221,7 +232,7 @@ function UserMenu() {
                     <MenuItem icon={<HelpCircle size={20} />} label="Trợ giúp & hỗ trợ" />
                     <MenuItem icon={<Monitor size={20} />} label="Màn hình & trợ năng" />
                     <MenuItem icon={<MessageSquare size={20} />} label="Đóng góp ý kiến" />
-                    <MenuItem icon={<LogOut size={20} />} label="Đăng xuất" />
+                    <MenuItem icon={<LogOut size={20} />} label="Đăng xuất" onClick={handleLogout} />
 
                     <p className="text-xs text-gray-500 px-3 mt-2">
                         Quyền riêng tư · Điều khoản · Quảng cáo · Cookie · Xem thêm
@@ -235,12 +246,14 @@ function UserMenu() {
 function MenuItem({
     icon,
     label,
+    onClick,
 }: {
     icon: React.ReactNode;
     label: string;
+    onClick?: () => void;
 }) {
     return (
-        <div className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer">
+        <div onClick={onClick} className="flex items-center justify-between p-3 hover:bg-gray-100 rounded-lg cursor-pointer">
             <div className="flex items-center gap-3">
                 {icon}
                 <span className="font-medium">{label}</span>
@@ -418,7 +431,7 @@ function Tinnhan({ onClose }: { onClose: () => void }) {
     return (
         <div className="absolute top-14 right-0  h-[calc(100vh-56px)] bg-gray-100 z-[999] overflow-auto">
             <div ref={ref} className="max-w-[1180px] mx-auto p-4 gap-4">
-                
+
                 {openPostForm && <CreatePost onClose={() => setOpenPostForm(false)} />}
             </div>
         </div>
