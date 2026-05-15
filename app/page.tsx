@@ -543,13 +543,13 @@ export default function App() {
                   <div className="mt-2">
                     {post.mediaType === "image" ? (
                       <img
-                        src={post?.mediaUrl || image_vavart_null.src}
+                        src={post.mediaUrl || undefined}
                         alt="media"
                         className="w-full max-h-[72vh] object-contain bg-black"
                       />
                     ) : post.mediaType === "video" ? (
                       <video
-                        src={post.mediaUrl || image_vavart_null.src}
+                        src={post.mediaUrl || undefined}
                         controls
                         className="w-full max-h-[72vh] object-contain bg-black"
                       />

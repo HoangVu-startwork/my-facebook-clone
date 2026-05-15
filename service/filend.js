@@ -3,15 +3,10 @@ import api from "../api/api";
 const Filend = {
     postFilend: async (selectedUser, message) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
             const response = await api.post(`/ketban/send`, {
                 sdt: selectedUser,
                 message: message,
-            }, config)
+            }, {withCredentials: true})
             return response.data;
         } catch (error) {
             throw error.response?.data || error;
@@ -21,12 +16,7 @@ const Filend = {
     // Chấp nhận lời mời
     putFilendAccept: async (id) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.put(`/ketban/accept/${id}`, config);
+            const response = await api.put(`/ketban/accept/${id}`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -36,12 +26,7 @@ const Filend = {
     // Từ chối lời mời
     putFilendReject: async (id) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.put(`/ketban/reject/${id}`, config);
+            const response = await api.put(`/ketban/reject/${id}`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -50,12 +35,7 @@ const Filend = {
     // Xoá lời mời kết bạn
     putDeleteFilendReject: async (id) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.delete(`/ketban/requests/${id}`, config);
+            const response = await api.delete(`/ketban/requests/${id}`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -64,13 +44,7 @@ const Filend = {
 
     getReceivePending: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/receiverpending`, config);
+            const response = await api.get(`/ketban/receiverpending`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -79,12 +53,7 @@ const Filend = {
 
     getFilend: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.post(`/ketban/send`, config)
+            const response = await api.post(`/ketban/send`, {withCredentials: true})
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -93,13 +62,7 @@ const Filend = {
 
     getUserfilend: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/strangers`, config);
+            const response = await api.get(`/ketban/strangers`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -108,13 +71,7 @@ const Filend = {
 
     getUserPending: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/pending`, config);
+            const response = await api.get(`/ketban/pending`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -123,13 +80,7 @@ const Filend = {
 
     getUserFriends: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/friends`, config);
+            const response = await api.get(`/ketban/friends`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -138,13 +89,7 @@ const Filend = {
 
     getUserBlocked: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/blocked`, config);
+            const response = await api.get(`/ketban/blocked`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -153,13 +98,7 @@ const Filend = {
 
     getUserRejected: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/rejected`, config);
+            const response = await api.get(`/ketban/rejected`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -168,13 +107,7 @@ const Filend = {
 
     getUserAccepted: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/ketban/accepted`, config);
+            const response = await api.get(`/ketban/accepted`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;

@@ -6,13 +6,7 @@ let viewedPosts = new Set();          // các post đã tăng view
 const Post = {
     Thembaipost: async (content, file, backgroundColor) => {
         try {
-            const token = window.localStorage.getItem("token");
             let body;
-            const config = {}
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            console.log(file);
             if (file) {
                 body = new FormData();
                 body.append("content", content);
@@ -26,7 +20,7 @@ const Post = {
                 };
             }
             // Gửi request
-            const response = await api.post(`/postsfb`, body, config);
+            const response = await api.post(`/postsfb`, body, {withCredentials: true});
 
             return response;
         } catch (error) {
@@ -40,14 +34,7 @@ const Post = {
     // /post/view/:postId
     viewPost: async (postId, element) => {
         try {
-            const token = window.localStorage.getItem("token");
-
-            const config = {}
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.post(`/post/view/${postId}`, config)
+            const response = await api.post(`/post/view/${postId}`, {withCredentials: true})
             return response;
         } catch (error) {
 
@@ -56,15 +43,7 @@ const Post = {
 
     getPost: async (page, limit, seed) => {
         try {
-            
-            const token = window.localStorage.getItem("token");
-
-            const config = {}
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-
-            const response = await api.get(`/post1/postfbuser?page=${page}&limit=${limit}&seed=${seed}`, config)
+            const response = await api.get(`/post1/postfbuser?page=${page}&limit=${limit}&seed=${seed}`, {withCredentials: true})
             return response;
         } catch (error) {
 

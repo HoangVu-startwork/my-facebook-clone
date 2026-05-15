@@ -30,14 +30,7 @@ const Messages = {
                 formData.append("file", file);
             }
 
-
-            const token = window.localStorage.getItem("token");
-
-            const config = {}
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.post(`/message/sendimg`, formData, config);
+            const response = await api.post(`/message/sendimg`, formData, {withCredentials: true});
 
             console.log(response)
             return response;
@@ -48,12 +41,7 @@ const Messages = {
 
     getMessages: async (conversationId) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.get(`/message/getblock/${conversationId}`, config);
+            const response = await api.get(`/message/getblock/${conversationId}`, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;
@@ -62,12 +50,7 @@ const Messages = {
 
     putMessagesXem: async (conversationId, lastMessageId) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.put(`/message/mark-read`, {conversationId, lastMessageId}, config);
+            const response = await api.put(`/message/mark-read`, {conversationId, lastMessageId}, {withCredentials: true});
             return response;
         } catch (error) {
             throw error.response?.data || error;

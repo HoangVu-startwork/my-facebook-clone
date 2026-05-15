@@ -17,14 +17,7 @@ const Conversation = {
             return conversationPromise;
         }
 
-        const token = window.localStorage.getItem("token");
-        const config = {};
-
-        if (token) {
-            config.headers = { Authorization: `Bearer ${token}` };
-        }
-
-        conversationPromise = api.get("/conversation", config)
+        conversationPromise = api.get("/conversation", {withCredentials: true})
             .then(res => {
                 conversationCache = res;
                 return res;
@@ -42,12 +35,7 @@ const Conversation = {
 
     getConversation: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.get(`/conversation`, config);
+            const response = await api.get(`/conversation`, {withCredentials: true});
             console.log(response)
             return response;
         } catch (error) {

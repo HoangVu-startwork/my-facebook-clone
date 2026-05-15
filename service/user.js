@@ -32,16 +32,25 @@ const Auth = {
         }
     },
 
+    // đăng xuất tài khoản
+    logout: async () => {
+        try {
+            const response = await api.post(`/users/logout`);
+            // Sau khi server xóa cookie thành công, chuyển hướng về trang login
+            window.location.href = "/login";
+            return response;
+        } catch (error) {
+            // Ngay cả khi lỗi, thông thường vẫn nên đẩy user về trang login
+            window.location.href = "/login";
+            throw error.response?.data || error;
+        }
+    },
+
     gettoken: async () => {
         try {
             if (verified) return;
             verified = true;
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.get(`/users/verify`, config)
+            const response = await api.get(`/users/verify`, {withCredentials: true})
             return response;
         } catch (error) {
             window.location.href = "/login";
@@ -51,11 +60,6 @@ const Auth = {
 
     postIntroduceEducation: async () => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
             const response = await api.post(`/education`, {
                 username: username,
                 email: email,
@@ -72,13 +76,20 @@ const Auth = {
 
     getIntroduce: async (userId) => {
         try {
-            const token = window.localStorage.getItem("token");
-            const config = {};
-            if (token) {
-                config.headers = { 'Authorization': `Bearer ${token}` };
-            }
-            const response = await api.get(`/educations/${userId}`, config);
+            const response = await api.get(`/educations/${userId}`, {withCredentials: true});
             return response;
+        } catch (error) {
+            throw error.response?.data || error;
+        }
+    },
+
+    putuploadavatUrlfacebook: async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('avatUrlfacebook', file);
+
+            const response = await api.put(`/users/avatUrlfacebook`, formData);
+            return response.data;
         } catch (error) {
             throw error.response?.data || error;
         }
