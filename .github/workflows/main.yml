@@ -20,4 +20,4 @@ jobs:
             git pull origin production
             npm install
             npm run build
-            pm2 reload next-demo
+            pm2 reload next-fb
