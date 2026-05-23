@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           script: |
-            cd /home/next-deploy-vps
+            cd /home/my-facebook-clone
             git pull origin production
             npm install
             npm run build
