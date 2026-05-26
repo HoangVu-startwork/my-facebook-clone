@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:9090";
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "https://webpostsend.click/api";
 
 let socket = null;
 
