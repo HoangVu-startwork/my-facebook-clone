@@ -1,11 +1,11 @@
 import axios from "axios";
 
 // 1. Lấy giá trị biến môi trường, nếu không có thì mặc định là chuỗi rỗng ''
-const apiHost = process.env.NEXT_PUBLIC_API_HOST || 'https://webpostsend.click/api/api';
+const apiHost = 'https://webpostsend.click/api/api';
 
 const api = axios.create({
   // 2. Gọi .replace() an toàn sau khi đã chắc chắn nó là một chuỗi
-  baseURL: apiHost.replace('https', 'http'),
+  baseURL: 'https://webpostsend.click/api/api',
   withCredentials: true // 🔥 Quan trọng: cho phép gửi cookie
 });
 
