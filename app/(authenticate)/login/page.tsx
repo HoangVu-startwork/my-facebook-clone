@@ -59,7 +59,7 @@ export default function LoginPage() {
           </div>
           <div className="bg-white mt-[-40] p-6 space-y-4">
             <div className="flex-col items-center text-center">
-              <h1 className="text-3xl font-bold">Log in to NexChat</h1>
+              <h1 className="text-3xl font-bold">Log in to NexChat 1</h1>
               {error && <p className="text-red-500 text-center font-bold leading-9 tracking-tight text-lg max-w-md mx-auto">{error}</p>}
             </div>
             <div className="mt-3 relative">
