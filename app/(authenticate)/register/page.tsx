@@ -203,7 +203,7 @@ export default function Page() {
             </div>
             <div className="w-full bg-gray-100 lg:w-1/2 flex items-center justify-center">
                 <div className="max-w-md w-full p-3">
-                    <h1 className="text-3xl font-semibold mb-2 text-black text-center">Create a new account</h1>
+                    <h1 className="text-3xl font-semibold mb-2 text-black text-center">Create a new account 123</h1>
                     <h1 className="text-base font-semibold mb-6 text-gray-500 text-center">It's quick and easy.</h1>
                     {error && <p className="text-red-500 text-center font-bold leading-9 tracking-tight text-lg max-w-md mx-auto">{error}</p>}
                     <div className="space-y-4">
