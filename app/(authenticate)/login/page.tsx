@@ -49,7 +49,7 @@ export default function LoginPage() {
         </div>
       )}
       <section className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="from-nexchat max-w-lg w-full h-full mx-auto flex flex-col justify-center">
+        <div className="from-nexchat max-w-lg w-full rounded p-6 space-y-4 mx-auto">
           <div className="flex flex-col items-center text-center">
             <Image
               src={Imane}
@@ -58,7 +58,7 @@ export default function LoginPage() {
             />
             {/* <p className="text-2xl mt-[-30] font-semibold text-black">Sign In</p> */}
           </div>
-          <div className="bg-white mt-[-40] p-6 space-y-4">
+          <div className="from-nexchat-div bg-white mt-[-40] p-6 space-y-4">
             <div className="flex-col items-center text-center">
               <h1 className="text-3xl font-bold font-nextchat">Log in to NexChat</h1>
               {error && <p className="text-red-500 text-center font-bold leading-9 tracking-tight text-lg max-w-md mx-auto">{error}</p>}

@@ -22,23 +22,24 @@ body {
 @layer utilities {
   @media (max-width: 900px) {
     .font-nextchat {
-      font-size: 26px;
+      font-size: 29px;
     }
   }
 
   @media (max-width: 600px) {
     .font-nextchat {
-      font-size: 22px;
+      font-size: 27px;
     }
 
     .sign-in {
       padding: 12px 12px;
     }
+
   }
 
   @media (max-width: 450px) {
     .font-nextchat {
-      font-size: 20px;
+      font-size: 25px;
     }
 
     .sign-in {
@@ -48,9 +49,14 @@ body {
     .input-login{
       font-size: 14px;
     }
-    /* .from-nexchat{
-      margin-top: -15% !important;
-    } */
+    .from-nexchat{
+      top: 50%;
+      left: 50%;
+      /* transform: translate(-50%, -50%); */
+    }
+    .from-nexchat-div{
+      padding: 15px;
+    }
   }
 
 }
