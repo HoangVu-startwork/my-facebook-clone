@@ -49,7 +49,7 @@ export default function LoginPage() {
         </div>
       )}
       <section className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="from-nexchat max-w-lg w-full rounded p-6 space-y-4 mx-auto">
+        <div className="from-nexchat max-w-lg w-full h-full mx-auto flex flex-col justify-center">
           <div className="flex flex-col items-center text-center">
             <Image
               src={Imane}
