@@ -35,6 +35,10 @@ body {
       padding: 12px 12px;
     }
 
+    .from-nexchat {
+      top: 50%;
+      left: 50%;
+    }
   }
 
   @media (max-width: 450px) {
@@ -46,15 +50,17 @@ body {
       padding: 10px 12px;
     }
 
-    .input-login{
+    .input-login {
       font-size: 14px;
     }
-    .from-nexchat{
+
+    .from-nexchat {
       top: 50%;
       left: 50%;
       /* transform: translate(-50%, -50%); */
     }
-    .from-nexchat-div{
+
+    .from-nexchat-div {
       padding: 15px;
     }
   }
