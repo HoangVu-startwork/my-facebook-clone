@@ -7,12 +7,47 @@ body {
 
 /* Nếu bạn dùng globals.css */
 .input-error {
-  border-color: #dc2626 !important;   /* đỏ-600 */
+  border-color: #dc2626 !important;
+  /* đỏ-600 */
 }
 
 .error-icon {
-  background-image: url("/warning-icon.svg"); /* icon ! */
+  background-image: url("/warning-icon.svg");
+  /* icon ! */
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: right 10px center;
+}
+
+@layer utilities {
+  @media (max-width: 900px) {
+    .font-nextchat {
+      font-size: 26px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .font-nextchat {
+      font-size: 22px;
+    }
+
+    .sign-in {
+      padding: 12px 12px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .font-nextchat {
+      font-size: 20px;
+    }
+
+    .sign-in {
+      padding: 10px 12px;
+    }
+
+    .input-login{
+      font-size: 14px;
+    }
+  }
+
 }
