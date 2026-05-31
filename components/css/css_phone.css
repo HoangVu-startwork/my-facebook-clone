@@ -1,0 +1,78 @@
+@layer utilities {
+    @media (max-width: 600px) {
+        .date-selector-day {
+            background: yellow;
+            padding: 0px !important;
+            margin: 0px !important;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .date-selector-button{
+            width: 100%;
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+    }
+
+    @media (max-width: 415px) {
+        .date-selector-button {
+            width: 120px;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+    }
+
+    @media (max-width: 410px) {
+        .date-selector-button {
+            width: 115px;
+            padding-left: 7px !important;
+            padding-right: 7px !important;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .date-selector-button {
+            width: 115px;
+        }
+    }
+
+    @media (max-width: 395px) {
+        .date-selector-button {
+            width: 100%;
+            font-size: 14px;
+        }
+      
+        .date-selector-day {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .date-selector-day > :nth-child(3) {
+            grid-column: 1 / span 2;
+        }
+    }
+
+    @media (max-width: 370px) {
+        .date-selector-button {
+            min-width: 100% !important;
+            max-width: 100% !important;
+            
+        }
+    }
+
+}
+
+.date-selector-day {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.date-selector-button{
+    padding-left: 15px;
+    padding-right: 15px;
+}

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-
+import "./css/css_phone.css";
 // Ngày tháng năm
 interface DateSelectorProps {
   onSelect: (date: { day: number | null; month: number | null; year: number | null }) => void;
@@ -49,7 +49,7 @@ export default function DateSelector({ onSelect, dateError }: DateSelectorProps)
       <button
         onClick={() => setOpenDropdown(openDropdown === type ? null : type)}
 
-        className={`w-32 mx-2.5 px-2 py-2 border rounded-lg shadow-sm text-gray-700 text-sm font-medium flex justify-between items-center focus:ring-2 focus:ring-blue-500
+        className={`date-selector-button px-2 py-2 border rounded-lg shadow-sm text-gray-700 text-sm font-medium flex justify-between items-center focus:ring-2 focus:ring-blue-500
           ${dateError ? "border border-red-600" : "border border-gray-300"}`}
         
       >
@@ -88,7 +88,7 @@ export default function DateSelector({ onSelect, dateError }: DateSelectorProps)
       ref={ref}
       className="bg-gray-100 flex flex-col items-center justify-center"
     >
-      <div className="flex items-center">{renderDropdown("day", days)}{renderDropdown("month", months)}{renderDropdown("year", years)}</div>
+      <div className="flex items-center date-selector-day">{renderDropdown("day", days)}{renderDropdown("month", months)}{renderDropdown("year", years)}</div>
     </div>
   );
 }
