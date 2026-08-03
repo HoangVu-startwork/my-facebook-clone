@@ -4,21 +4,24 @@ let postFetched = false;              // feed đã load chưa
 let viewedPosts = new Set();          // các post đã tăng view
 
 const Post = {
-    Thembaipost: async (content, file, backgroundColor) => {
+    Thembaipost: async (content, file, backgroundColor, privacy, userList) => {
         try {
-            let body;
+            const body = new FormData();
+
+            body.append("content", content);
+    
             if (file) {
-                body = new FormData();
-                body.append("content", content);
-                body.append("file", file); // file upload
-                if (backgroundColor) body.append("backgroundColor", backgroundColor);
-            } else {
-                // Nếu chọn màu → gửi JSON
-                body = {
-                    content,
-                    backgroundColor: backgroundColor || null
-                };
+                body.append("file", file);
             }
+    
+            if (backgroundColor) {
+                body.append("backgroundColor", backgroundColor);
+            }
+    
+            body.append("privacy", privacy);
+            body.append("userList", JSON.stringify(userList));
+
+            console.log(body)
             // Gửi request
             const response = await api.post(`/postsfb`, body, {withCredentials: true});
 

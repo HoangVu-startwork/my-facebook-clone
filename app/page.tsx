@@ -428,7 +428,6 @@ export default function App() {
         <>{mes}</>
       )}
       <h1>Chat Realtime</h1>
-      <Conversation />
       <input
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
@@ -569,9 +568,9 @@ export default function App() {
                   <span className="ml-1">
                     {formatNumber(post.reactions.total)}
                   </span>
-                  <span className="ml-1">
+                  {/* <span className="ml-1">
                     {formatNumber(post.reactions.total)}
-                  </span>
+                  </span> */}
                 </span>
 
 

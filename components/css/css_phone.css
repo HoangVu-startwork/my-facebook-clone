@@ -1,7 +1,6 @@
 @layer utilities {
     @media (max-width: 600px) {
         .date-selector-day {
-            background: yellow;
             padding: 0px !important;
             margin: 0px !important;
             width: 100%;

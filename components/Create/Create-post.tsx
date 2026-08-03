@@ -5,6 +5,10 @@ import Post from "@/service/post";
 import Auth from "@/service/user";
 import { useAuthStore } from "@/service/service-once/AuthState";
 import Loading from "@/components/loading/Loading";
+import FriendService from "@/service/filend";
+import ImageNull from "@/public/image/avatuser_null.png";
+import { useFriendStore } from "@/service/service-once/userFriends";
+import '@/components/css/Create_post.css';
 import { useRef } from "react";
 
 
@@ -28,6 +32,10 @@ export default function CreatePost({ onClose }: { onClose: () => void }) {
     const [showPrivacyModal, setShowPrivacyModal] = useState(false);
     const [fileType, setFileType] = useState<"image" | "video" | null>(null);
     const [loading, setLoading] = useState(false);
+
+    const friends = useFriendStore((state) => state.friends);
+    const fetchFriends = useFriendStore((state) => state.fetchFriends);
+    const version = useFriendStore((state) => state.version);
 
     //const [usernames, setUsernames] = useState("")
     const COLORS = [
@@ -64,19 +72,6 @@ export default function CreatePost({ onClose }: { onClose: () => void }) {
     };
     const user = useAuthStore((state) => state.user);
 
-    const handleSubmit = async () => {
-        if (loading) return;
-        try {
-            setLoading(true);
-            const res = await Post.Thembaipost(content, file, backgroundColor);
-            alert("Đăng bài thành công!");
-            onClose();
-        } catch (err: any) {
-            alert(err?.error || "Lỗi khi đăng bài");
-        } finally {
-            setLoading(false); // tắt loading dù thành công hay lỗi
-        }
-    };
 
     const username = user?.username || "";
     const usernames = user?.username;
@@ -92,17 +87,106 @@ export default function CreatePost({ onClose }: { onClose: () => void }) {
 
 
     const [privacy, setPrivacy] = useState("public");
+    const [friendts, setFriends] = useState([]);
+    const [search, setSearch] = useState("");
+    const [showFriendsModal, setShowFriendsModal] = useState(false);
+    const [selectedFriends, setSelectedFriends] = useState<number[]>([]);
 
-    const handleSelectPrivacy = (value: SetStateAction<string>) => {
+
+    const handleSelectPrivacy = async (value: string) => {
         setPrivacy(value);
-        setShowPrivacyModal(false);
+        if (value === "exclude" ||
+            value === "specific") {
+            try {
+                setLoading(true);
+                //const response = await FriendService.getUserFriends();
+                await fetchFriends();
+
+                const latestState = useFriendStore.getState();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                setFriends(latestState.friends.data);
+                setShowFriendsModal(true);
+            } catch (error) {
+                console.error(error);
+                alert("Không lấy được danh sách bạn bè");
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            // public hoặc only_me
+            setShowPrivacyModal(false);
+        }
+        // setShowPrivacyModal(false);
     };
+
+
+    const handleToggleFriend = (friendId: number) => {
+        console.log("Đang toggle ID:", friendId);
+        setSelectedFriends((prev) =>
+            prev.includes(friendId)
+                ? prev.filter((id) => id !== friendId)
+                : [...prev, friendId]
+        );
+    };
+
+    const filteredFriends = friendts.filter((friend: any) =>
+        friend.username
+            .toLowerCase()
+            .includes(search.toLowerCase())
+    );
+
+    const handleSubmit = async () => {
+        if (loading) return;
+        try {
+            setLoading(true);
+            const res = await Post.Thembaipost(content, file, backgroundColor, privacy, selectedFriends);
+            alert("Đăng bài thành công!");
+            onClose();
+        } catch (err: any) {
+            alert(err?.error || "Lỗi khi đăng bài");
+        } finally {
+            setLoading(false); // tắt loading dù thành công hay lỗi
+        }
+    };
+
+    const privacyOptions = [
+        {
+            value: "public",
+            title: "Công khai",
+            desc: "Bất kỳ ai ở trong hoặc ngoài Facebook",
+            icon: "🌎",
+        },
+        {
+            value: "friendts",
+            title: "Bạn bè",
+            desc: "Bạn bè của bạn trên Facebook",
+            icon: "👥",
+        },
+        {
+            value: "exclude",
+            title: "Bạn bè ngoại trừ...",
+            desc: "Không hiển thị với một số bạn bè",
+            icon: "🚫",
+        },
+        {
+            value: "specific",
+            title: "Bạn bè cụ thể",
+            desc: "Chỉ hiển thị với những người bạn chọn",
+            icon: "🎯",
+        },
+        {
+            value: "only_me",
+            title: "Chỉ mình tôi",
+            desc: "Chỉ bạn mới xem được bài viết",
+            icon: "🔒",
+        },
+    ];
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[99999]">
             {loading && (
                 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
 
@@ -145,7 +229,7 @@ export default function CreatePost({ onClose }: { onClose: () => void }) {
                     </div>
                 </div>
                 {showPrivacyModal && (
-                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-30">
 
                         <div className="bg-white w-[400px] rounded-xl shadow-lg p-4 animate-fadeIn">
 
@@ -162,95 +246,40 @@ export default function CreatePost({ onClose }: { onClose: () => void }) {
                             <p className="text-sm text-gray-600 mb-4">
                                 Ai có thể xem bài viết của bạn?
                             </p>
-                            <div className="space-y-3">
 
-                                {/* Công khai */}
-                                <div
-                                    onClick={() => handleSelectPrivacy("public")}
-                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
-                                >
-                                    <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
-                                        🌎
+                            <div className="space-y-2">
+                                {privacyOptions.map((item) => (
+                                    <div
+                                        key={item.value}
+                                        onClick={() => handleSelectPrivacy(item.value)}
+                                        className={`flex items-center justify-between p-2 rounded-lg cursor-pointer
+            ${privacy === item.value
+                                                ? "bg-blue-50"
+                                                : "hover:bg-gray-100"
+                                            }`}
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
+                                                {item.icon}
+                                            </div>
+
+                                            <div>
+                                                <p className="font-medium">{item.title}</p>
+                                                <p className="text-sm text-gray-500">
+                                                    {item.desc}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <input
+                                            type="radio"
+                                            checked={privacy === item.value}
+                                            readOnly
+                                            className="w-5 h-5"
+                                        />
                                     </div>
-
-                                    <div>
-                                        <p className="font-medium">Công khai</p>
-                                        <p className="text-sm text-gray-500">
-                                            Bất kỳ ai ở trong hoặc ngoài Facebook
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Bạn bè */}
-                                <div
-                                    onClick={() => handleSelectPrivacy("friends")}
-                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
-                                >
-                                    <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
-                                        👥
-                                    </div>
-
-                                    <div>
-                                        <p className="font-medium">Bạn bè</p>
-                                        <p className="text-sm text-gray-500">
-                                            Bạn bè của bạn trên Facebook
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Bạn bè ngoại trừ… */}
-                                <div
-                                    onClick={() => handleSelectPrivacy("exclude")}
-                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
-                                >
-                                    <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
-                                        🚫
-                                    </div>
-
-                                    <div>
-                                        <p className="font-medium">Bạn bè ngoại trừ…</p>
-                                        <p className="text-sm text-gray-500">
-                                            Không hiển thị với một số bạn bè
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Bạn bè cụ thể */}
-                                <div
-                                    onClick={() => handleSelectPrivacy("specific")}
-                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
-                                >
-                                    <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
-                                        🎯
-                                    </div>
-
-                                    <div>
-                                        <p className="font-medium">Bạn bè cụ thể</p>
-                                        <p className="text-sm text-gray-500">
-                                            Chỉ hiển thị với những người bạn chọn
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Chỉ mình tôi */}
-                                <div
-                                    onClick={() => handleSelectPrivacy("only_me")}
-                                    className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
-                                >
-                                    <div className="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center">
-                                        🔒
-                                    </div>
-
-                                    <div>
-                                        <p className="font-medium">Chỉ mình tôi</p>
-                                        <p className="text-sm text-gray-500">
-                                            Chỉ bạn mới xem được bài viết
-                                        </p>
-                                    </div>
-                                </div>
-
+                                ))}
                             </div>
-
                             {/* BUTTON TIẾP tục */}
                             <button
                                 onClick={() => setShowPrivacyModal(false)}
@@ -261,6 +290,109 @@ export default function CreatePost({ onClose }: { onClose: () => void }) {
                         </div>
                     </div>
                 )}
+                {
+                    showFriendsModal && (
+                        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                            <div className="bg-white w-[450px] h-[650px] rounded-xl overflow-hidden">
+
+                                {/* Header */}
+                                <div className="p-4 border-b">
+                                    <h2 className="text-xl font-bold text-center">
+                                        {privacy === "exclude" && (
+                                            <>Không hiển thị với một số bạn bè</>
+                                        )}
+
+                                        {/* Video */}
+                                        {privacy === "specific" && (
+                                            <>Chỉ hiển thị với những người bạn chọn</>
+                                        )}
+                                    </h2>
+                                </div>
+
+                                {/* Search */}
+                                <div className="p-3">
+                                    <input
+                                        type="text"
+                                        placeholder="Tìm kiếm bạn bè"
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="w-full px-4 py-2 bg-gray-100 rounded-full outline-none"
+                                    />
+                                </div>
+
+                                {/* List */}
+                                <div className="h-[460px] overflow-y-auto">
+                                    <h3 className="font-bold px-4 py-2">
+                                        Tất cả bạn bè
+                                    </h3>
+                                    <div className="px-4 py-2 banbe-daduocchon">
+                                        {friendts
+                                            .filter((friend: any) =>
+                                                selectedFriends.includes(friend.friendId)
+                                            )
+                                            .map((friend: any) => (
+                                                <div
+                                                    key={friend.friendId}
+                                                    className="flex flex-col items-center w-16"
+                                                >
+                                                    <img
+                                                        src={friend.avatUrl || ImageNull.src}
+                                                        alt=""
+                                                        className="w-12 h-12 rounded-full object-cover"
+                                                    />
+
+                                                    <span className="text-xs text-center truncate w-full">
+                                                        {friend.username}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                    </div>
+                                    {filteredFriends.map((friend: any) => (
+                                        <div
+                                            key={friend.friendId}
+                                            className="flex items-center justify-between px-4 py-3 hover:bg-gray-100"
+                                        >
+                                            <div
+                                                onClick={() => handleToggleFriend(friend.friendId)}
+                                                className="flex items-center gap-3 cursor-pointer flex-1"
+                                            >
+                                                <img
+                                                    src={friend.avatUrl || ImageNull.src}
+                                                    alt=""
+                                                    className="w-12 h-12 rounded-full object-cover"
+                                                />
+
+                                                <span className="font-medium">
+                                                    {friend.username}
+                                                </span>
+                                            </div>
+
+                                            <input
+                                                type="radio"
+                                                checked={selectedFriends.includes(friend.friendId)}
+                                                onChange={() => handleToggleFriend(friend.friendId)}
+                                                className="w-5 h-5"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Footer */}
+                                <div className="p-3 border-t mb-3">
+                                    <button
+                                        onClick={() => {
+                                            console.log(selectedFriends);
+                                            setShowFriendsModal(false);
+                                        }}
+                                        className="w-full bg-blue-500 text-white py-2 rounded-lg"
+                                    >
+                                        Xong ({selectedFriends.length})
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
                 <div className="overflow-y-auto">
                     <div
                         className={`mb-3 p-5 ${backgroundColor ? "flex items-center justify-center" : ""
