@@ -30,6 +30,7 @@ export default function LoginPage() {
     } catch (error: any) {
       if (error) {
         setError(error.message);
+        setLoading(false);
       } else {
         setError("Hệ thống đang bao trì");
       }
@@ -41,14 +42,14 @@ export default function LoginPage() {
 
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full min-h-dvh overflow-hidden">
       {loading && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <Loading />
         </div>
       )}
-      <section className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="max-w-lg w-full rounded p-6 space-y-4 mt-[-50]">
+      <section className="flex justify-center items-center min-h-dvh bg-gray-100">
+        <div className="from-nexchat max-w-lg w-full rounded p-6 space-y-4 mx-auto">
           <div className="flex flex-col items-center text-center">
             <Image
               src={Imane}
@@ -57,16 +58,16 @@ export default function LoginPage() {
             />
             {/* <p className="text-2xl mt-[-30] font-semibold text-black">Sign In</p> */}
           </div>
-          <div className="bg-white mt-[-40] p-6 space-y-4">
+          <div className="from-nexchat-div bg-white p-6 space-y-4">
             <div className="flex-col items-center text-center">
-              <h1 className="text-3xl font-bold">Log in to NexChat 1</h1>
+              <h1 className="text-3xl font-bold font-nextchat">Log in to NexChat</h1>
               {error && <p className="text-red-500 text-center font-bold leading-9 tracking-tight text-lg max-w-md mx-auto">{error}</p>}
             </div>
             <div className="mt-3 relative">
               <input
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                className={`mt-1 p-2 w-full border rounded-md border-zinc-800 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300
+                className={`input-login mt-1 p-2 w-full border rounded-md border-zinc-800 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300
                   ${isError ? "border-red-600 input-error error-icon" : "border-gray-300"}`}
                 type="text" placeholder="Email address or phone number" />
               {isError && (
@@ -88,7 +89,7 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 p-2 w-full border rounded-md border-zinc-800 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" placeholder="Password" />
+                  className="input-login mt-1 p-2 w-full border rounded-md border-zinc-800 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" placeholder="Password" />
 
                 <button
                   type="button"
@@ -126,7 +127,7 @@ export default function LoginPage() {
               </div>
             </div>
             <div>
-              <button onClick={handleSubmit} className="w-full mt-2 mb-2 py-3 bg-blue-600 hover:bg-blue-700 rounded text-lg font-bold text-gray-50 transition duration-200">Sign In</button>
+              <button onClick={handleSubmit} className="sign-in w-full mt-2 mb-2 py-3 bg-blue-600 hover:bg-blue-700 rounded text-lg font-bold text-gray-50 transition duration-200">Sign In</button>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex flex-row items-center">

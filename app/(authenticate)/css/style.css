@@ -7,12 +7,62 @@ body {
 
 /* Nếu bạn dùng globals.css */
 .input-error {
-  border-color: #dc2626 !important;   /* đỏ-600 */
+  border-color: #dc2626 !important;
+  /* đỏ-600 */
 }
 
 .error-icon {
-  background-image: url("/warning-icon.svg"); /* icon ! */
+  background-image: url("/warning-icon.svg");
+  /* icon ! */
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: right 10px center;
+}
+
+@layer utilities {
+  @media (max-width: 900px) {
+    .font-nextchat {
+      font-size: 29px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .font-nextchat {
+      font-size: 27px;
+    }
+
+    .sign-in {
+      padding: 12px 12px;
+    }
+
+    .from-nexchat {
+      top: 50%;
+      left: 50%;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .font-nextchat {
+      font-size: 25px;
+    }
+
+    .sign-in {
+      padding: 10px 12px;
+    }
+
+    .input-login {
+      font-size: 14px;
+    }
+
+    .from-nexchat {
+      top: 50%;
+      left: 50%;
+      /* transform: translate(-50%, -50%); */
+    }
+
+    .from-nexchat-div {
+      padding: 15px;
+    }
+  }
+
 }
