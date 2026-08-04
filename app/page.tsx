@@ -427,23 +427,6 @@ export default function App() {
       {mes && (
         <>{mes}</>
       )}
-      <h1>Chat Realtime</h1>
-      <input
-        value={msg}
-        onChange={(e) => setMsg(e.target.value)}
-        className="border p-2"
-      />
-
-      {/* <button onClick={sendMessage} className="bg-blue-600 text-white p-2 ml-2">
-        Send
-
-                  // ref={(node) => {
-          //   if (node && observerRef.current) {
-          //     observerRef.current.observe(node);
-          //   }
-          // }}
-      </button> */}
-
       <ul>
         {messages.map((m, i) => (
           <li key={i}>{m}</li>
