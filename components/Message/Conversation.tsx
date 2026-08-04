@@ -260,14 +260,14 @@ export default function () {
                     )
                 })}
             </div>
-            {openConversations.map((conv, index) => (
+            {/* {openConversations.map((conv, index) => (
                 <ChatBox
                     key={conv.id}
                     conv={conv}
                     index={index}
                     onClose={() => removeOpenConversation(conv.id)}
                 />
-            ))}
+            ))} */}
         </>
     )
 }

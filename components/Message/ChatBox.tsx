@@ -333,9 +333,9 @@ export function ChatBox({ conv, index, onClose }: any) {
     return (
         <>
             <div
-                className="khung-message fixed flex flex-col w-[325px] h-[600px] bottom-2 z-9"
+                className="khung-message fixed flex flex-col w-[310px] h-[500px] bottom-2 z-99"
                 style={{
-                    right: `${index * 330 + 10}px`,
+                    right: `${index * 315 + 10}px`,
                     backgroundColor: conv.topic?.color || "#ffffff"
                 }}
             >
