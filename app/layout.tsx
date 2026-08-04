@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/Menu/Header";
 import MenuNgang from "@/components/Menu/Menu_ngang";
 import InitAuth from "@/Initialize-once/InitAuth";
+import ChatBoxManager from "@/components/Message/ChatBoxManager";
 // import 
 import "./globals.css";
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* <InitAuth/> */}
          <Header />
           {children}
+          <ChatBoxManager/>
       </body>
     </html>
   );

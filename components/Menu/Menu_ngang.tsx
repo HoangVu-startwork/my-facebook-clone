@@ -435,6 +435,7 @@ function Tinnhan({ onClose }: { onClose: () => void }) {
             >
                 <Message />
             </div>
+            
         </div>
     );
 }
