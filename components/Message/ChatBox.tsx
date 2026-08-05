@@ -337,6 +337,33 @@ export function ChatBox({ conv, index, onClose }: any) {
     const isMobile = useIsMobile(1000);
 
     const [showKeyboard, setShowKeyboard] = useState(false);
+
+    // // ≥ 1000px: hiển thị tối đa 4 ChatBox như hiện tại. - 550px – 999px: chỉ hiển thị 1 ChatBox.
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const { openConversations, clearOpenConversations } =
+                useConversationStore.getState();
+    
+            if (width < 550) {
+                clearOpenConversations();
+            } else if (
+                width < 1000 &&
+                openConversations.length > 1
+            ) {
+                useConversationStore.setState({
+                    openConversations: [openConversations.at(-1)!],
+                });
+            }
+        };
+    
+        handleResize();
+    
+        window.addEventListener("resize", handleResize);
+        return () =>
+            window.removeEventListener("resize", handleResize);
+    }, []);
+    
     return (
         <>
             <div
