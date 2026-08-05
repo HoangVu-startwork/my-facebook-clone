@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   icons: { icon: "/transparent-Photoroom.png" },
 };
 
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
