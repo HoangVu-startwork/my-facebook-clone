@@ -22,7 +22,7 @@ export default function Header() {
     <>
       <InitAuth />
       <InitSocket />
-      <MenuNgang />
+      {!isMobile && <MenuNgang />}
       {isMobile && (
         <>
           <Phone_menu
