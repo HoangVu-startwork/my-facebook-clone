@@ -38,7 +38,7 @@ export default function BottomNavigation({ onOpenMenu }: Props) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-white shadow-lg md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-white shadow-lg">
       <div className="grid h-16 grid-cols-5">
         {menus.map((item) => {
           const Icon = item.icon;
@@ -63,7 +63,7 @@ export default function BottomNavigation({ onOpenMenu }: Props) {
               />
 
               {item.badge && (
-                <span className="absolute right-5 top-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
+                <span className="absolute translate-x-1/1 -translate-y-1/2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
                   {item.badge}
                 </span>
               )}
