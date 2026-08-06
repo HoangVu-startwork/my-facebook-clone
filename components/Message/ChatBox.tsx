@@ -8,6 +8,7 @@ import image_vavart_null from "@/public/image/avatuser_null.png";
 import ServiceMessages from "@/service/messages";
 import { useConversationStore } from "@/components/Message/conversationStore";
 import "../Message/style.css";
+import { useIsMobile } from "@/components/Size_tracking/Size";
 
 
 
@@ -330,13 +331,47 @@ export function ChatBox({ conv, index, onClose }: any) {
 
     // State lưu ảnh đang xem
     const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+
+    // Mở bàn phím trên màng hình ipad
+    const isMobile = useIsMobile(1000);
+
+    const [showKeyboard, setShowKeyboard] = useState(false);
+
+    // // ≥ 1000px: hiển thị tối đa 4 ChatBox như hiện tại. - 550px – 999px: chỉ hiển thị 1 ChatBox.
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const { openConversations, clearOpenConversations } =
+                useConversationStore.getState();
+    
+            if (width < 550) {
+                clearOpenConversations();
+            } else if (
+                width < 1000 &&
+                openConversations.length > 1
+            ) {
+                useConversationStore.setState({
+                    openConversations: [openConversations.at(-1)!],
+                });
+            }
+        };
+    
+        handleResize();
+    
+        window.addEventListener("resize", handleResize);
+        return () =>
+            window.removeEventListener("resize", handleResize);
+    }, []);
+    
     return (
         <>
             <div
                 className="khung-message fixed flex flex-col w-[310px] h-[500px] bottom-2 z-99"
                 style={{
                     right: `${index * 315 + 10}px`,
-                    backgroundColor: conv.topic?.color || "#ffffff"
+                    backgroundColor: conv.topic?.color || "#ffffff",
+                    bottom: showKeyboard ? 300 : 10,
                 }}
             >
                 {/* Header */}
@@ -564,13 +599,38 @@ export function ChatBox({ conv, index, onClose }: any) {
                         📎
                     </label>
 
-                    <input
+
+                    {/* <input
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && handleSend()}
                         className="flex-1 border rounded-full px-3 py-2 text-sm"
                         placeholder="Nhập tin nhắn..."
+                    /> */}
+                    {/* Mô phỏng bàn phím ipad */}
+                    <input
+                        value={content}
+                        onFocus={() => {
+                            if (isMobile) {
+                                setShowKeyboard(true);
+                            }
+                        }}
+                        onBlur={() => {
+                            setShowKeyboard(false);
+                        }}
+                        onChange={(e) => setContent(e.target.value)}
+                        className="flex-1 border rounded-full px-3 py-2 text-sm"
+                        placeholder="Nhập tin nhắn..."
                     />
+                    {/* Mô phỏng bàn phím ipad */}
+                    {showKeyboard && isMobile && (
+                        <div
+                            className="fixed left-0 right-0 bottom-0 h-[300px] bg-gray-300 z-[999999]"
+                        >
+                            Fake Keyboard
+                        </div>
+                    )}
+
 
                     <button onClick={handleSend}>➤</button>
                 </div>

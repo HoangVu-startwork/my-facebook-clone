@@ -146,8 +146,56 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
             fetched: false,
         }),
 
+    // addOpenConversation: (conv: ConversationType) =>
+    //     set((state) => {
+    //         if (
+    //             state.openConversations.some(
+    //                 (c) => c.id === conv.id
+    //             )
+    //         ) {
+    //             return state;
+    //         }
+
+    //         if (state.openConversations.length < 4) {
+    //             return {
+    //                 openConversations: [
+    //                     ...state.openConversations,
+    //                     conv,
+    //                 ],
+    //             };
+    //         }
+
+    //         return {
+    //             openConversations: [
+    //                 ...state.openConversations.slice(1),
+    //                 conv,
+    //             ],
+    //         };
+    //     }),
+    // ≥ 1000px: hiển thị tối đa 4 ChatBox như hiện tại. - 550px – 999px: chỉ hiển thị 1 ChatBox.
     addOpenConversation: (conv: ConversationType) =>
         set((state) => {
+            const width =
+                typeof window !== "undefined"
+                    ? window.innerWidth
+                    : 1920;
+    
+            if (width < 550) {
+                return state;
+            }
+    
+            if (width < 1000) {
+                if (
+                    state.openConversations[0]?.id === conv.id
+                ) {
+                    return state;
+                }
+    
+                return {
+                    openConversations: [conv],
+                };
+            }
+    
             if (
                 state.openConversations.some(
                     (c) => c.id === conv.id
@@ -155,7 +203,7 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
             ) {
                 return state;
             }
-
+    
             if (state.openConversations.length < 4) {
                 return {
                     openConversations: [
@@ -164,7 +212,7 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
                     ],
                 };
             }
-
+    
             return {
                 openConversations: [
                     ...state.openConversations.slice(1),
