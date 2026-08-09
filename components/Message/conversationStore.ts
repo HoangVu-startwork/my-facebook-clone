@@ -107,24 +107,77 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
             conversations: data,
         }),
 
-    updateConversation: (conversationId, lastMessage) =>
+    // updateConversation: (conversationId, lastMessage) =>
+    //     set((state) => {
+    //         const list = [...state.conversations];
+
+    //         const index = list.findIndex((c) => c.id === conversationId);
+
+    //         if (index === -1) return state;
+
+    //         const conversation = {
+    //             ...list[index],
+    //             lastMessage,
+    //         };
+
+    //         list.splice(index, 1);
+    //         list.unshift(conversation);
+
+    //         return {
+    //             conversations: list,
+    //         };
+    //     }),
+
+    updateConversation: (
+        conversationId,
+        lastMessage,
+        unreadCount
+    ) =>
         set((state) => {
-            const list = [...state.conversations];
 
-            const index = list.findIndex((c) => c.id === conversationId);
+            const conversations =
+                state.conversations.map(
+                    (conversation) =>
+                        conversation.id === conversationId
+                            ? {
+                                ...conversation,
 
-            if (index === -1) return state;
+                                lastMessage,
 
-            const conversation = {
-                ...list[index],
-                lastMessage,
-            };
+                                unreadCount:
+                                    unreadCount ??
+                                    conversation.unreadCount ??
+                                    0
+                            }
+                            : conversation
+                );
 
-            list.splice(index, 1);
-            list.unshift(conversation);
+            // Tin nhắn mới đưa conversation lên đầu
+            conversations.sort((a, b) => {
+
+                const timeA =
+                    a.lastMessage
+                        ? new Date(
+                            a.lastMessage.createdAt
+                        ).getTime()
+                        : new Date(
+                            a.createdAt
+                        ).getTime();
+
+                const timeB =
+                    b.lastMessage
+                        ? new Date(
+                            b.lastMessage.createdAt
+                        ).getTime()
+                        : new Date(
+                            b.createdAt
+                        ).getTime();
+
+                return timeB - timeA;
+            });
 
             return {
-                conversations: list,
+                conversations
             };
         }),
 
@@ -263,6 +316,23 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
                             ? {
                                 ...conversation,
                                 unreadCount: 0
+                            }
+                            : conversation
+                )
+        })),
+
+    updateUnreadCount: (
+        conversationId: number,
+        unreadCount: number
+    ) =>
+        set((state) => ({
+            conversations:
+                state.conversations.map(
+                    (conversation) =>
+                        conversation.id === conversationId
+                            ? {
+                                ...conversation,
+                                unreadCount
                             }
                             : conversation
                 )
