@@ -45,6 +45,8 @@ export interface ConversationType {
     friend?: UserInfo;
     topic?: Topic;
     lastMessage?: LastMessage;
+    // Tin nhắn chưa xem
+    unreadCount: number;
 }
 
 interface ConversationStore {
@@ -179,23 +181,23 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
                 typeof window !== "undefined"
                     ? window.innerWidth
                     : 1920;
-    
+
             if (width < 550) {
                 return state;
             }
-    
+
             if (width < 1000) {
                 if (
                     state.openConversations[0]?.id === conv.id
                 ) {
                     return state;
                 }
-    
+
                 return {
                     openConversations: [conv],
                 };
             }
-    
+
             if (
                 state.openConversations.some(
                     (c) => c.id === conv.id
@@ -203,7 +205,7 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
             ) {
                 return state;
             }
-    
+
             if (state.openConversations.length < 4) {
                 return {
                     openConversations: [
@@ -212,7 +214,7 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
                     ],
                 };
             }
-    
+
             return {
                 openConversations: [
                     ...state.openConversations.slice(1),
@@ -233,4 +235,36 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
         set({
             openConversations: [],
         }),
+
+    // thong báo so luong tin nhắn chưa xem
+    increaseUnread: (conversationId: number) =>
+        set((state) => ({
+            conversations:
+                state.conversations.map(
+                    (conversation) =>
+                        conversation.id === conversationId
+                            ? {
+                                ...conversation,
+
+                                unreadCount:
+                                    (conversation.unreadCount || 0) +
+                                    1
+                            }
+                            : conversation
+                )
+        })),
+
+    clearUnread: (conversationId: number) =>
+        set((state) => ({
+            conversations:
+                state.conversations.map(
+                    (conversation) =>
+                        conversation.id === conversationId
+                            ? {
+                                ...conversation,
+                                unreadCount: 0
+                            }
+                            : conversation
+                )
+        })),
 }));

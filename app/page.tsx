@@ -424,14 +424,7 @@ export default function App() {
 
   return (
     <div className="mt-28">
-      {mes && (
-        <>{mes}</>
-      )}
-      <ul>
-        {messages.map((m, i) => (
-          <li key={i}>{m}</li>
-        ))}
-      </ul>
+      
       {dataPost.map((post, index) => {
         const type = getPostType(post);
         const reactionIcons = post.reactions.detail

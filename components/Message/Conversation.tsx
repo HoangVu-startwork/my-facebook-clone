@@ -42,6 +42,7 @@ interface ConversationType {
     friend?: UserInfo;
     topic?: Topic;
     lastMessage?: LastMessage;
+    unreadCount: number;
 }
 
 interface LastMessage {
