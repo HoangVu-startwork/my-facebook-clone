@@ -68,7 +68,8 @@ interface ConversationStore {
 
     updateConversation: (
         conversationId: number,
-        lastMessage: LastMessage
+        lastMessage: LastMessage,
+        unreadCount: number
     ) => void;
 
     addConversation: (conversation: ConversationType) => void;
