@@ -172,10 +172,52 @@ export default function () {
         };
     }, [socket, addConversation]);
 
+    // Tổng tin nhắn chưa xem
+    const unreadConversationCount = conversations.filter(
+        (conversation) =>
+            (conversation.unreadCount || 0) > 0
+    ).length;
 
+    const totalUnreadMessages = conversations.reduce(
+        (total, conversation) =>
+            total + (conversation.unreadCount || 0),
+        0
+    );
 
     return (
         <>
+            <div className="relative">
+                <span>Tin nhắn</span>
+
+                {unreadConversationCount > 0 && (
+                    <span className="
+            absolute
+            -top-2
+            -right-4
+            min-w-[20px]
+            h-[20px]
+            px-1
+            rounded-full
+            bg-red-500
+            text-white
+            text-xs
+            flex
+            items-center
+            justify-center
+        ">
+                        {unreadConversationCount > 99
+                            ? "99+"
+                            : unreadConversationCount}
+                    </span>
+                )}
+            </div>
+            {totalUnreadMessages > 0 && (
+                <span>
+                    {totalUnreadMessages > 99
+                        ? "99+"
+                        : totalUnreadMessages}
+                </span>
+            )}
             <div>
                 {conversations.map(u => {
 
@@ -254,23 +296,23 @@ export default function () {
                                     {u.unreadCount > 0 && (
                                         <span
                                             className="
-                absolute
-                -top-1
-                -right-1
-                min-w-[20px]
-                h-[20px]
-                px-1
-                rounded-full
-                bg-red-500
-                text-white
-                text-[11px]
-                font-semibold
-                flex
-                items-center
-                justify-center
-                border-2
-                border-white
-            "
+                                                absolute
+                                                -top-1
+                                                -right-1
+                                                min-w-[20px]
+                                                h-[20px]
+                                                px-1
+                                                rounded-full
+                                                bg-red-500
+                                                text-white
+                                                text-[11px]
+                                                font-semibold
+                                                flex
+                                                items-center
+                                                justify-center
+                                                border-2
+                                                border-white
+                                            "
                                         >
                                             {u.unreadCount > 99
                                                 ? "99+"
