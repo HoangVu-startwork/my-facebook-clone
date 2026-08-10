@@ -24,6 +24,7 @@ import Auth from "@/service/user";
 import CreatePost from "@/components/Create/Create-post"
 import Link from "next/link";
 import { useAuthStore } from "@/service/service-once/AuthState"
+import { useConversationStore } from "@/components/Message/conversationStore";
 import Conversation from "@/service/conversation";
 
 
@@ -31,6 +32,21 @@ export default function bookHeader() {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
     const [tinhanOpen, settinhanOpen] = useState(false);
+    const conversations = useConversationStore(
+        (s) => s.conversations
+    );
+        // Tổng tin nhắn chưa xem
+        const unreadConversationCount = conversations.filter(
+            (conversation) =>
+                (conversation.unreadCount || 0) > 0
+        ).length;
+    
+        const totalUnreadMessages = conversations.reduce(
+            (total, conversation) =>
+                total + (conversation.unreadCount || 0),
+            0
+        );
+    
     return (
         <div className="menu_nexchat w-full bg-white shadow h-14 flex items-center px-4 justify-between fixed top-0 left-0 z-50">
 
@@ -86,6 +102,31 @@ export default function bookHeader() {
                     <CircleIcon icon={<MessageCircle size={20} />} />
                 </div>
                 <CircleIcon icon={<Bell size={20} />} badge={1} />
+                <div className="relative">
+                <span>Tin nhắn</span>
+
+                {unreadConversationCount > 0 && (
+                    <span className="
+            absolute
+            -top-2
+            -right-4
+            min-w-[20px]
+            h-[20px]
+            px-1
+            rounded-full
+            bg-red-500
+            text-white
+            text-xs
+            flex
+            items-center
+            justify-center
+        ">
+                        {unreadConversationCount > 99
+                            ? "99+"
+                            : unreadConversationCount}
+                    </span>
+                )}
+            </div>
 
                 {/* Avatar Menu */}
                 <UserMenu />
