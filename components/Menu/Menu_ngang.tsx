@@ -457,16 +457,16 @@ import Message from "@/components/Message/Conversation";
 function Tinnhan({ onClose }: { onClose: () => void }) {
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const close = (e: MouseEvent) => {
-            if (ref.current && !ref.current.contains(e.target as Node)) {
-                onClose();
-            }
-        };
+    // useEffect(() => {
+    //     const close = (e: MouseEvent) => {
+    //         if (ref.current && !ref.current.contains(e.target as Node)) {
+    //             onClose();
+    //         }
+    //     };
 
-        document.addEventListener("mousedown", close);
-        return () => document.removeEventListener("mousedown", close);
-    }, [onClose]);
+    //     document.addEventListener("mousedown", close);
+    //     return () => document.removeEventListener("mousedown", close);
+    // }, [onClose]);
 
     return (
         <div className="absolute top-14 right-0 h-[calc(100vh-56px)] bg-gray-100 z-[999] overflow-auto">

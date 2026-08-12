@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatBox } from "./ChatBox";
-import { useConversationStore } from "./conversationStore";
+import { useConversationStore } from "./conversationStoreNew";
 
 export default function ChatBoxManager() {
     const openConversations = useConversationStore(
