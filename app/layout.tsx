@@ -5,6 +5,7 @@ import Header from "@/components/Menu/Header";
 import MenuNgang from "@/components/Menu/Menu_ngang";
 import InitAuth from "@/Initialize-once/InitAuth";
 import ChatBoxManager from "@/components/Message/ChatBoxManager";
+import InitConversation from "@/service/start/InitConversation";
 // import 
 import "./globals.css";
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <Header />
           {children}
           <ChatBoxManager/>
+          {/* <InitConversation /> */}
       </body>
     </html>
   );

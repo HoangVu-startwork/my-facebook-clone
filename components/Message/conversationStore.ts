@@ -92,6 +92,7 @@ export const useConversationStore = create<ConversationStore>((set, get) => ({
         try {
             const res = await ConversationService.getConversation();
 
+            
             set({
                 conversations: res.data.data,
                 fetched: true,
