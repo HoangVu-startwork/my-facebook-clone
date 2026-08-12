@@ -527,6 +527,8 @@ export const useConversationStore =
         clearOpenConversations: () =>
             set({
                 openConversations: []
-            })
+            }),
+
+            
 
     }));

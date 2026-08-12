@@ -6,7 +6,7 @@ import { useAuthStore } from "@/service/service-once/AuthState";
 import Conversation from "@/service/conversation";
 import image_vavart_null from "@/public/image/avatuser_null.png";
 import ServiceMessages from "@/service/messages";
-import { useConversationStore } from "@/components/Message/conversationStore";
+import { useConversationStore } from "@/components/Message/conversationStoreNew";
 import "../Message/style.css";
 import { useIsMobile } from "@/components/Size_tracking/Size";
 
