@@ -204,76 +204,62 @@ export const useConversationStore =
             conversationId,
             lastMessage,
             unreadCount
-        ) => {
-
+        ) =>
             set((state) => {
-
-                const cache =
-                    state.conversationCache.map(
-                        (conversation) => {
-
-                            if (
-                                conversation.id !==
-                                conversationId
-                            ) {
-                                return conversation;
-                            }
-
-                            return {
-
-                                ...conversation,
-
-                                lastMessage,
-
-                                unreadCount:
-                                    unreadCount !== undefined
-                                        ? unreadCount
-                                        : conversation.unreadCount
-
-                            };
-                        }
-                    );
-
-
-                // Tin nhắn mới nhất lên đầu
-                cache.sort((a, b) => {
-
-                    const timeA =
-                        a.lastMessage
-                            ? new Date(
-                                a.lastMessage.createdAt
-                            ).getTime()
-                            : new Date(
-                                a.createdAt
-                            ).getTime();
-
-                    const timeB =
-                        b.lastMessage
-                            ? new Date(
-                                b.lastMessage.createdAt
-                            ).getTime()
-                            : new Date(
-                                b.createdAt
-                            ).getTime();
-
-                    return timeB - timeA;
-
-                });
-
-
-                return {
-
-                    // CACHE GỐC
-                    conversationCache: cache,
-
-                    // UI
-                    conversations: cache,
-
+                const conversation = state.conversations.find(
+                    (c) => c.id === conversationId
+                );
+        
+                if (!conversation) {
+                    return state;
+                }
+        
+                if (!lastMessage?.createdAt) {
+                    return state;
+                }
+        
+                const currentLastMessage =
+                    conversation.lastMessage;
+        
+                // Nếu tin nhắn hiện tại đã mới hơn
+                if (
+                    currentLastMessage?.createdAt &&
+                    new Date(lastMessage.createdAt).getTime() <=
+                        new Date(
+                            currentLastMessage.createdAt
+                        ).getTime()
+                ) {
+                    return {
+                        conversations: state.conversations.map((c) =>
+                            c.id === conversationId
+                                ? {
+                                      ...c,
+                                      unreadCount:
+                                          unreadCount ??
+                                          c.unreadCount,
+                                  }
+                                : c
+                        ),
+                    };
+                }
+        
+                const updatedConversation = {
+                    ...conversation,
+                    lastMessage,
+                    lastMessageAt: lastMessage.createdAt,
+                    unreadCount:
+                        unreadCount ?? conversation.unreadCount,
                 };
-
-            });
-
-        },
+        
+                return {
+                    conversations: [
+                        updatedConversation,
+                        ...state.conversations.filter(
+                            (c) => c.id !== conversationId
+                        ),
+                    ],
+                };
+            }),
 
 
         // =========================
