@@ -110,16 +110,16 @@ export default function () {
     };
 
     // Load conversations lần đầu
-    useEffect(() => {
-        fetchConversations();
-    }, [fetchConversations]);
+    // useEffect(() => {
+    //     fetchConversations();
+    // }, [fetchConversations]);
 
     // Scroll xuống cuối
-    useLayoutEffect(() => {
-        bottomRef.current?.scrollIntoView({
-            behavior: "smooth",
-        });
-    }, []);
+    // useLayoutEffect(() => {
+    //     bottomRef.current?.scrollIntoView({
+    //         behavior: "smooth",
+    //     });
+    // }, []);
 
     // Có tin nhắn mới
     useEffect(() => {
