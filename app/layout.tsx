@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          <Header />
           {children}
           <ChatBoxManager/>
-          {/* <InitConversation /> */}
+          <InitConversation />
       </body>
     </html>
   );
