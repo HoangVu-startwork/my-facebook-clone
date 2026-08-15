@@ -24,7 +24,7 @@ import Auth from "@/service/user";
 import CreatePost from "@/components/Create/Create-post"
 import Link from "next/link";
 import { useAuthStore } from "@/service/service-once/AuthState"
-import { useConversationStore } from "@/components/Message/conversationStore";
+import { useConversationStore } from "@/components/Message/conversationStoreNew";
 import Conversation from "@/service/conversation";
 
 
