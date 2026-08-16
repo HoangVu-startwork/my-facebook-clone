@@ -291,7 +291,7 @@ export default function () {
 
                         >
                             <div className="conversation_message_div">
-                                <div className="conversation_message_div_1">
+                                <div className="conversation_message_div_1 relative">
                                     <img
                                         src={u.friend?.avatUrl || image_vavart_null.src}
                                         alt="avatar"
@@ -307,7 +307,7 @@ export default function () {
                                                 h-[20px]
                                                 px-1
                                                 rounded-full
-                                                bg-red-500
+                                                bg-amber-500
                                                 text-white
                                                 text-[11px]
                                                 font-semibold
