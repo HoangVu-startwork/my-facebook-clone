@@ -40,6 +40,10 @@ export function ChatBox({ conv, index, onClose }: any) {
 
     const currentUserId = useAuthStore((s) => s.user?.id);
 
+    const updateUnreadCount = useConversationStore(
+        (s) => s.updateUnreadCount
+    );
+
     const [isSending, setIsSending] = useState(false);
 
     const handleSend = async () => {
@@ -257,76 +261,250 @@ export function ChatBox({ conv, index, onClose }: any) {
     //     };
     // }, []);
     const socket = useSocketStore((s) => s.socket);
-
     useEffect(() => {
         if (!socket || !conv?.id) return;
-
-        // 🔹 Join room theo conversationId
-        socket.emit("joinConversation", conv.id);
-
+    
+        socket.emit(
+            "joinConversation",
+            conv.id
+        );
+    
         const handleNewMessage = (data: ChatMessage) => {
-            // 🔥 Chỉ nhận message thuộc conversation hiện tại
-            if (data.conversationId !== conv.id) return;
-
+            if (
+                data.conversationId !== conv.id
+            ) {
+                return;
+            }
+    
             setMessages((prev) => {
-                const exists = prev.some((m) => m.id === data.id);
+                const exists = prev.some(
+                    (m) => m.id === data.id
+                );
+    
                 if (exists) return prev;
-                return [...prev, data];
+    
+                return [
+                    ...prev,
+                    data
+                ];
             });
-
-            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    
+            bottomRef.current?.scrollIntoView({
+                behavior: "smooth"
+            });
         };
-
+    
         const handleMessagesRead = ({
             conversationId,
             readerId,
             lastMessageId,
             isRead
         }: any) => {
-
-            if (conversationId !== conv.id) return;
-
+    
+            if (
+                conversationId !== conv.id
+            ) {
+                return;
+            }
+    
             setMessages((prev) =>
                 prev.map((msg) =>
                     msg.id <= lastMessageId &&
-                        msg.senderId !== readerId
-                        ? { ...msg, isRead }
+                    msg.senderId !== readerId
+                        ? {
+                            ...msg,
+                            isRead
+                        }
                         : msg
                 )
             );
+    
+            if (
+                readerId === currentUserId &&
+                isRead
+            ) {
+                updateUnreadCount(
+                    conversationId,
+                    0
+                );
+            }
         };
-
-        socket.on("newConversationmes", handleNewMessage);
-        socket.on("messagesRead", handleMessagesRead);
-
+    
+        socket.on(
+            "newConversationmes",
+            handleNewMessage
+        );
+    
+        socket.on(
+            "messagesRead",
+            handleMessagesRead
+        );
+    
         return () => {
-            socket.emit("leaveConversation", conv.id);
-            socket.off("newConversationmes", handleNewMessage);
-            socket.off("messagesRead", handleMessagesRead);
+            socket.emit(
+                "leaveConversation",
+                conv.id
+            );
+    
+            socket.off(
+                "newConversationmes",
+                handleNewMessage
+            );
+    
+            socket.off(
+                "messagesRead",
+                handleMessagesRead
+            );
         };
+    
+    }, [
+        socket,
+        conv?.id,
+        currentUserId,
+        updateUnreadCount
+    ]);
+    // useEffect(() => {
+    //     if (!socket || !conv?.id) return;
 
-    }, [socket, conv?.id]);
+    //     // 🔹 Join room theo conversationId
+    //     socket.emit("joinConversation", conv.id);
+
+    //     const handleNewMessage = (data: ChatMessage) => {
+    //         // 🔥 Chỉ nhận message thuộc conversation hiện tại
+    //         if (data.conversationId !== conv.id) return;
+
+    //         setMessages((prev) => {
+    //             const exists = prev.some((m) => m.id === data.id);
+    //             if (exists) return prev;
+    //             return [...prev, data];
+    //         });
+
+    //         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    //     };
+
+    //     // const handleMessagesRead = ({
+    //     //     conversationId,
+    //     //     readerId,
+    //     //     lastMessageId,
+    //     //     isRead
+    //     // }: any) => {
+
+    //     //     if (conversationId !== conv.id) return;
+
+    //     //     setMessages((prev) =>
+    //     //         prev.map((msg) =>
+    //     //             msg.id <= lastMessageId &&
+    //     //                 msg.senderId !== readerId
+    //     //                 ? { ...msg, isRead }
+    //     //                 : msg
+    //     //         )
+    //     //     );
+    //     // };
+    //     const handleMessagesRead = ({
+    //         conversationId,
+    //         readerId,
+    //         lastMessageId,
+    //         isRead
+    //     }: any) => {
+        
+    //         if (conversationId !== conv.id) return;
+        
+    //         setMessages((prev) =>
+    //             prev.map((msg) =>
+    //                 msg.id <= lastMessageId &&
+    //                 msg.senderId !== readerId
+    //                     ? {
+    //                         ...msg,
+    //                         isRead
+    //                     }
+    //                     : msg
+    //             )
+    //         );
+        
+    //         // 🔥 Nếu conversation này đã được đọc
+    //         // thì unreadCount của conversation = 0
+    //         if (
+    //             readerId === currentUserId &&
+    //             isRead
+    //         ) {
+    //             updateUnreadCount(
+    //                 conversationId,
+    //                 0
+    //             );
+    //         }
+    //     };
+    //     socket.on("newConversationmes", handleNewMessage);
+    //     socket.on("messagesRead", handleMessagesRead);
+
+    //     return () => {
+    //         socket.emit("leaveConversation", conv.id);
+    //         socket.off("newConversationmes", handleNewMessage);
+    //         socket.off("messagesRead", handleMessagesRead);
+    //     };
+
+    // }, [socket, conv?.id]);
 
     //
+    // useEffect(() => {
+    //     if (!messages.length) return;
+
+    //     // Lấy tin nhắn cuối cùng của người khác gửi
+    //     const unreadMessages = messages.filter(
+    //         (msg) =>
+    //             msg.senderId !== currentUserId &&
+    //             !msg.isRead
+    //     );
+
+    //     if (unreadMessages.length === 0) return;
+
+    //     const lastMessage = unreadMessages[unreadMessages.length - 1];
+    //     console.log(conv.id, lastMessage.id)
+    //     ServiceMessages.putMessagesXem(conv.id, lastMessage.id)
+    //         .catch((err) => console.error("Lỗi mark read", err));
+
+    // }, [messages, conv.id, currentUserId]);
     useEffect(() => {
         if (!messages.length) return;
-
-        // Lấy tin nhắn cuối cùng của người khác gửi
+    
         const unreadMessages = messages.filter(
             (msg) =>
                 msg.senderId !== currentUserId &&
                 !msg.isRead
         );
-
+    
         if (unreadMessages.length === 0) return;
-
-        const lastMessage = unreadMessages[unreadMessages.length - 1];
-        console.log(conv.id, lastMessage.id)
-        ServiceMessages.putMessagesXem(conv.id, lastMessage.id)
-            .catch((err) => console.error("Lỗi mark read", err));
-
-    }, [messages, conv.id, currentUserId]);
-
+    
+        const lastMessage =
+            unreadMessages[unreadMessages.length - 1];
+    
+        console.log(
+            "Mark read:",
+            conv.id,
+            lastMessage.id
+        );
+    
+        ServiceMessages.putMessagesXem(
+            conv.id,
+            lastMessage.id
+        )
+            .then(() => {
+                // 🔥 QUAN TRỌNG
+                // Xóa unread của conversation ngay trên Zustand
+                updateUnreadCount(conv.id, 0);
+            })
+            .catch((err) => {
+                console.error(
+                    "Lỗi mark read",
+                    err
+                );
+            });
+    
+    }, [
+        messages,
+        conv.id,
+        currentUserId,
+        updateUnreadCount
+    ]);
     const [showReadTimeId, setShowReadTimeId] = useState<number | null>(null);
 
     // State lưu ảnh đang xem
