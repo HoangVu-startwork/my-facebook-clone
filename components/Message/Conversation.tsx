@@ -183,6 +183,9 @@ export default function () {
             total + (conversation.unreadCount || 0),
         0
     );
+    const clearUnread = useConversationStore(
+        (s) => s.clearUnread
+    );
 
     return (
         <>
@@ -282,6 +285,7 @@ export default function () {
                     return (
                         <div key={u.id}
                             onClick={() => {
+                                clearUnread(u.id);
                                 addOpenConversation(u);
                             }}
 
