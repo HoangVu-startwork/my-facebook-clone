@@ -51,7 +51,17 @@ const Post = {
         } catch (error) {
 
         }
+    },
+
+    getPostVideo: async (page, limit, seed) => {
+        try {
+            const response = await api.get(`/post/video?page=${page}&limit=${limit}&seed=${seed}`, {withCredentials: true})
+            return response;
+        } catch (error) {
+
+        }
     }
+
 }
 
 export default Post;
