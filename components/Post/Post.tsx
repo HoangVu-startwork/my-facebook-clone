@@ -306,60 +306,6 @@ export default function Post() {
         onView: handleViewPost,
     });
 
-
-    // const handleViewPost = async (postId: number) => {
-    //     if (viewedRef.current.has(postId)) return;
-
-    //     viewedRef.current.add(postId);
-
-    //     try {
-    //         await Posts.viewPost(postId);
-
-    //         setDataPost(prev =>
-    //             prev.map(p =>
-    //                 p.id === postId ? { ...p, views: p.views + 1 } : p
-    //             )
-    //         );
-    //     } catch (err) {
-    //         console.error("view post failed", err);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     observerRef.current = new IntersectionObserver(
-    //         entries => {
-    //             entries.forEach(entry => {
-    //                 const postId = Number(entry.target.getAttribute("data-post-id"));
-    //                 if (!postId) return;
-
-    //                 if (entry.isIntersecting) {
-    //                     // thấy post → đếm 2s
-    //                     const timer = setTimeout(() => {
-    //                         handleViewPost(postId);
-    //                     }, 2000);
-
-    //                     timersRef.current.set(postId, timer);
-    //                     console.log(1);
-    //                 } else {
-    //                     // lướt đi nhanh → hủy
-    //                     const timer = timersRef.current.get(postId);
-    //                     if (timer) {
-    //                         clearTimeout(timer);
-    //                         timersRef.current.delete(postId);
-    //                     }
-    //                 }
-    //             });
-    //         },
-    //         { threshold: 0.6 }
-    //     );
-
-    //     return () => {
-    //         observerRef.current?.disconnect();
-    //         timersRef.current.forEach(t => clearTimeout(t));
-    //         timersRef.current.clear();
-    //     };
-    // }, []);
-
     const setPostRef = (
         node: HTMLDivElement | null,
         isLastPost: boolean
@@ -374,23 +320,6 @@ export default function Post() {
             infiniteObserverRef.current.observe(node);
         }
     };
-
-    // const setPostRef = (
-    //     node: HTMLDivElement | null,
-    //     isLastPost: boolean
-    // ) => {
-    //     if (!node) return;
-
-    //     // observer cũ
-    //     if (observerRef.current) {
-    //         observerRef.current.observe(node);
-    //     }
-
-    //     // infinite scroll chỉ quan tâm post cuối
-    //     if (infiniteObserverRef.current && isLastPost) {
-    //         infiniteObserverRef.current.observe(node);
-    //     }
-    // };
 
 
     return (

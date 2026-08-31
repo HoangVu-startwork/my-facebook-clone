@@ -1,5 +1,21 @@
 import { create } from "zustand";
+// Zustand
+
+
 import Auth from "@/service/user";
+
+// ┌──────────────────────────┐
+// │       AuthStore          │
+// ├──────────────────────────┤
+// │ user                     │ ← người đang đăng nhập
+// │ loading                  │ ← đang kiểm tra login?
+// │ fetched                  │ ← đã fetch user chưa?
+// ├──────────────────────────┤
+// │ fetchUser()              │ ← lấy thông tin user
+// │ logout()                 │ ← đăng xuất
+// └──────────────────────────┘
+
+
 
 export const useAuthStore = create((set, get) => ({
     user: null,
