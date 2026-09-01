@@ -1,0 +1,6 @@
+Zustand là một thư viện quản lý state (state management) cho React. 
+Nó cho phép tạo một store dùng chung để nhiều component 
+có thể đọc và thay đổi dữ liệu mà không cần truyền props qua nhiều tầng.
+
+Nói đơn giản: Zustand = một nơi lưu state dùng chung cho toàn bộ ứng dụng React.
+
