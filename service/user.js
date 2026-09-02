@@ -48,13 +48,11 @@ const Auth = {
 
     gettoken: async () => {
         try {
-            if (verified) return;
-            verified = true;
             const response = await api.get(`/users/verify`, {withCredentials: true})
             return response;
         } catch (error) {
             window.location.href = "/login";
-            throw error.response?.data || error;
+            throw error;
         }
     },
 
