@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAuthStore } from "@/service/service-once/AuthState";
+import { useAuthStore } from "@/service/User-ts/AuthState";
 
 export default function InitAuth() {
     const fetchUser = useAuthStore((state) => state.fetchUser);

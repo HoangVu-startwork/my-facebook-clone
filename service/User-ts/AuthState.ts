@@ -5,7 +5,7 @@ interface User {
     id: number;
     username: string;
     email: string;
-    avatUrl: string | null;
+    avaturl: string | null;
 }
 
 interface AuthState {

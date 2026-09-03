@@ -16,11 +16,19 @@ interface VerifyResponse {
 
 const Auth = {
     gettoken: async (): Promise<AxiosResponse<VerifyResponse>> => {
+        // Promise<AxiosResponse<VerifyResponse>>
+        // Function gettoken() sẽ trả về một Promise, và khi Promise hoàn thành thì kết quả là AxiosResponse<VerifyResponse>.
+        // Tách ra: Promise -> AxiosResponse -> VerifyResponse
+        // VerifyResponse: Ta có interface VerifyResponse { user: User; }
+        // -> Nên: AxiosResponse<VerifyResponse> -> có nghĩa Axios response chứa: data: VerifyResponse
+        // Tức: response.data -> có kiểu: VerifyResponse và response.data.user -> Có kiểu: User
+
         try {
-            const response = await api.get<VerifyResponse>(
+            const response = await api.get<VerifyResponse>( // api.get<VerifyResponse>() API này trả về data có cấu trúc VerifyResponse.
                 "/users/verify",
                 {
-                    withCredentials: true,
+                    withCredentials: true, // Nếu authentication của bạn sử dụng cookie, browser sẽ gửi cookie cùng request.
+                    // -> cho phép request gửi cookie đó lên backend.
                 }
             );
 

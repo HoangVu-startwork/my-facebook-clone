@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Auth from "@/service/user";
 import { initSocket } from "@/service/socket";
-import { useAuthStore } from "@/service/service-once/AuthState";
+import { useAuthStore } from "@/service/User-ts/AuthState";
 import { useSocketStore } from "@/service/sockets/userSocketStore";
 import Posts from "@/service/post";
 import LinkeButton from "@/components/LikeButton/Likebutton";

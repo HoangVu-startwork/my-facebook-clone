@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { useSocketStore } from "@/service/sockets/userSocketStore";
-import { useAuthStore } from "@/service/service-once/AuthState";
+import { useAuthStore } from "@/service/User-ts/AuthState";
 import Conversation from "@/service/conversation";
 import image_vavart_null from "@/public/image/avatuser_null.png";
 import ServiceMessages from "@/service/messages";
