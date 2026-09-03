@@ -23,7 +23,7 @@ import "../css/menu.css";
 import Auth from "@/service/user";
 import CreatePost from "@/components/Create/Create-post"
 import Link from "next/link";
-import { useAuthStore } from "@/service/service-once/AuthState"
+import { useAuthStore } from "@/service/User-ts/AuthState"
 import { useConversationStore } from "@/components/Message/conversationStoreNew";
 import Conversation from "@/service/conversation";
 

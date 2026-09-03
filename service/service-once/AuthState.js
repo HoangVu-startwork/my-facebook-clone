@@ -20,7 +20,7 @@ import Auth from "@/service/user";
 
 // Set -> Thay đổi state
 // Get -> đọc state hiện tại
-export const useAuthStore = create((set, get) => ({
+export const useAuthStore1 = create((set, get) => ({
     user: null, // Ban đầu chưa biết user có đăng nhập hay không
     // Cho nên user: null -> sau khi gọi Api: set({ user: res.data.user })
     // Thì thành: user = { id: 1, username: "abc", }

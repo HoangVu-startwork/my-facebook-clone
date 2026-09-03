@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAuthStore } from "@/service/service-once/AuthState";
+import { useAuthStore } from "@/service/User-ts/AuthState";
 import { useSocketStore } from "@/service/sockets/userSocketStore";
 import { useConversationStore } from "@/components/Message/conversationStoreNew";
 

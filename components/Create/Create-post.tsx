@@ -3,7 +3,7 @@
 import { useState, useEffect, SetStateAction } from "react";
 import Post from "@/service/post";
 import Auth from "@/service/user";
-import { useAuthStore } from "@/service/service-once/AuthState";
+import { useAuthStore } from "@/service/User-ts/AuthState";
 import Loading from "@/components/loading/Loading";
 import FriendService from "@/service/filend";
 import ImageNull from "@/public/image/avatuser_null.png";
