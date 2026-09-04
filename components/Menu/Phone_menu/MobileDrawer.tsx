@@ -9,6 +9,7 @@ import {
   Image,
   Settings,
   LogOut,
+  MessageCircleMore,
   X,
 } from "lucide-react";
 

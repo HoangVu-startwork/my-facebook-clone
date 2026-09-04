@@ -8,6 +8,7 @@ import {
   CirclePlus,
   Bell,
   Menu,
+  MessageCircleMore
 } from "lucide-react";
 
 interface Props {
@@ -31,8 +32,8 @@ export default function BottomNavigation({ onOpenMenu }: Props) {
       icon: CirclePlus,
     },
     {
-      href: "/notifications",
-      icon: Bell,
+      href: "/messagemore",
+      icon: MessageCircleMore,
       badge: 3,
     },
   ];
