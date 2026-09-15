@@ -6,6 +6,7 @@ interface User {
     username: string;
     email: string;
     avaturl: string | null;
+    avatUrlfacebook: string | null;
 }
 
 interface AuthState {

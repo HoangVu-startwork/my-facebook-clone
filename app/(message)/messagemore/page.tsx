@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Auth from "@/service/user";
-import { initSocket } from "@/service/socket";
+import Message from "@/components/Message/Message_phone/Conversation_phone";
+
 
 export default function App() {
     return (
         <>
-        hihji
+        <Message />
         </>
     )
 }
